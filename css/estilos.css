@@ -1,20 +1,17 @@
-
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #f4f4f4;
     margin:0;
     color: #161616;
     line-height: 1.6;
-    padding: 20px;
 }
 
 header { 
-    background-color: #e498d7;
-    color: #f4f4f4;
-    padding: 20px 0 10px 0px;
+    background-color: #20a296;
+    color: #404040;
     text-align: center;
     box-shadow: 0px 2px 6px  rgba(red, green, blue, alpha);
-    
+    padding-bottom: 20px;
 }
 
 header h1{
@@ -38,12 +35,12 @@ nav ul li{
 nav ul a{
     color: aliceblue;
     font-weight: 500;
+    font-size: 20px;
     text-decoration: none;
     transition: text-decoration 0.2s, color 0.2s;
 }
 nav ul a:hover{
-    text-decoration: underline;
-    color: #0b4150;
+    color: #404040;
 }
 
 main{
@@ -62,7 +59,7 @@ section {
 
 section h2{
     margin-top: 0;
-    color: blue;
+    color: #404040;
     font-size: 1.5em;
     margin-bottom: 20px;
 
@@ -78,8 +75,8 @@ section h2{
 }
 
 .ObraSocial li {
-    background: #d12c8f;
-    border: 1px solid #7cd9f3;
+    background: #3b6e69;
+    border: 1px solid #404040;
     border-radius: 5px;
     padding: 6px 12px;
     color: #fff;
@@ -98,11 +95,29 @@ section h2{
     grid-template-columns:repeat(4,1fr);
     gap: 30px;
     padding: 20px 0;
+    display: flex;
+    justify-content: center;
 
 }
+
+.contacto{
+    grid-template-columns:repeat(4,1fr);
+    gap: 30px;
+    padding: 20px 0;
+    display: flex;
+    justify-content:flex-start;
+    background: #fff;
+    border: 1px solid #404040;
+    border-radius: 10px;
+    padding:20px 22px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+
+}
+
 .Medicos > div {
     background: #fff;
-    border: 1px solid #9ec7e9;
+    border: 1px solid #404040;
     border-radius: 10px;
     padding:20px 22px;
     box-sizing: border-box;
@@ -110,16 +125,38 @@ section h2{
 }
 .Medicos > h3{
     margin-top: 0;
-    color: #0b4150;
+    color: #404040;
     font-size: 1.1em;
 }
 
 footer{
-    background: #fff;
-    padding: 20px 0;
+    background: #404040;
+    max-width: 100%;
+    min-height: 300px;
     text-align: center;
-    color: #423f3f;
+    color: #f0f0f0;
     margin-top: 40px;
     font-size: 0.95em;
-    border-top: 1px solid rgb(235, 230, 230);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.volver a {
+    color: #fafafa;
+    font-weight: 500;
+    font-size: 16px;
+    text-decoration: none;
+    border: 2px solid #404040;
+    padding: 7px;
+    border-radius: 10px;
+    background-color: #3b6e69;
+}
+
+.institucional {
+    min-height: 400px;
+}
+
+.boton {
+    margin-top: 50px;
 }
