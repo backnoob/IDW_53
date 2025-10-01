@@ -6,17 +6,30 @@ body {
     line-height: 1.6;
 }
 
-header { 
-    background-color: #20a296;
-    color: #404040;
-    text-align: center;
-    box-shadow: 0px 2px 6px  rgba(red, green, blue, alpha);
-    padding-bottom: 20px;
+/* Estilo del Nav */
+header .nav{
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
 }
 
-header h1{
-    margin: 0 0 10px 0;
-    font-size: 2em;
+.nav__logo {
+  height: 100%;  
+  display: flex;  
+  align-items: center; 
+}
+
+.nav__logo picture {
+  display: block;
+  height: 100%;
+}
+
+.nav__logo img {
+  height: 50%;  
+  width: auto;    
+  object-fit: contain;
 }
 
 nav ul{
@@ -33,7 +46,7 @@ nav ul li{
 }
 
 nav ul a{
-    color: aliceblue;
+    color: black;
     font-weight: 500;
     font-size: 20px;
     text-decoration: none;
@@ -41,7 +54,22 @@ nav ul a{
 }
 nav ul a:hover{
     color: #404040;
+} 
+      
+
+/* Estilos de section Hero */
+.hero{
+    height: 85vh;
+    background-image: url("/img/pexels-pavel-danilyuk-7108318.jpg");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
 }
+
+
+
+
+/* MAIN */
 
 main{
     max-width: 700px;
@@ -53,7 +81,7 @@ section {
     background: #fff;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); */
     border-radius: 8px;
 }
 
@@ -140,6 +168,7 @@ footer{
     display: flex;
     align-items: center;
     justify-content: center;
+    border: solid 3px #3b6e69;
 }
 
 .volver a {
@@ -159,4 +188,200 @@ footer{
 
 .boton {
     margin-top: 50px;
+}
+
+/* Estilos pagina de CONTACTO */
+
+
+.contendor_contacto{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Section Hero */
+
+.hero_contacto{
+    text-align: center;
+}
+
+.hero_contacto a{
+    text-decoration: none;
+    color: #161616;
+}
+
+
+/* Estilos de Main */
+.main__contacto{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos de la section main__contacto__info de Main */
+.main__contacto__info{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    padding: 2rem 0;
+    
+
+}
+
+.main__contacto__info-email{
+    padding: 1rem 2rem;
+box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;    margin-right: 1rem;
+    
+}
+
+.main__contacto__info-direccion{
+    padding: 1rem 2rem;
+box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;    margin-left:  1rem;
+}
+
+/* Estilo de la section main__contacto__mapa de Main */
+
+.main__contacto__mapa{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: brown;
+}
+.main__contacto__mapa iframe{
+    width: 100%;
+    height: 70vh;
+}
+
+
+/* Estilo para la section de formulario*/
+.main_contacto_form {
+  margin-top: 2rem;
+  background: #f9f9f9;
+}
+
+
+.main_contacto_form__contenedor {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: stretch; 
+  flex-wrap: wrap;      
+}
+
+
+.main_contacto_form__columna {
+  flex: 1;
+  min-width: 300px;
+}
+
+
+
+.main_contacto_form__columna--imagen {
+  display: flex;
+  height: 434px;
+}
+
+.main_contacto_form__imagen {
+  width: 100%;
+  height: 100%;     
+  object-fit: cover;  
+  border-radius: 12px;
+}
+
+
+.main_contacto_form__titulo {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.main_contacto_form__descripcion {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+
+.main_contacto_form__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+.main_contacto_form__fila {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap; 
+}
+
+.main_contacto_form__grupo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main_contacto_form__label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.main_contacto_form__input,
+.main_contacto_form__select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Botón */
+.main_contacto_form__boton {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.main_contacto_form__boton--primario {
+  background: #007bff;
+  color: #fff;
+}
+
+.main_contacto_form__boton--primario:hover {
+  background: #0056b3;
+}
+
+
+/* Estilo de section oficinas de Main*/
+.main__contacto__oficinas{
+  flex-direction: flex;
+  flex-direction: column;
+}
+
+.main__contacto__oficinas__oficina1 .main__contacto__oficinas__oficina2{
+  display: flex;
+}
+
+.main__contacto__oficinas__oficina1 p, .main__contacto__oficinas__oficina1 h3, .main__contacto__oficinas__oficina1 div{
+  display: inline;
+}
+
+
+
+/* Responsive: columnas en telefono */
+@media (max-width: 768px) {
+    .main__contacto__info{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+
+  .main_contacto_form__contenedor {
+    flex-direction: column;
+  }
+
+  .main_contacto_form__fila {
+    flex-direction: column;
+  }
 }
