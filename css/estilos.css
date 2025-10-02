@@ -6,7 +6,6 @@ body {
     line-height: 1.6;
 }
 
-/* Estilo del Nav */
 header .nav{
     height: 15vh;
     display: flex;
@@ -57,7 +56,6 @@ nav ul a:hover{
 } 
       
 
-/* Estilos de section Hero */
 .hero{
     height: 85vh;
     background-image: url("/img/pexels-pavel-danilyuk-7108318.jpg");
@@ -66,10 +64,6 @@ nav ul a:hover{
     background-size: cover;
 }
 
-
-
-
-/* MAIN */
 
 main{
     max-width: 700px;
@@ -81,7 +75,6 @@ section {
     background: #fff;
     padding: 20px;
     margin-bottom: 20px;
-    /* box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); */
     border-radius: 8px;
 }
 
@@ -111,7 +104,12 @@ section h2{
     font-weight: 500;
 }
 
+.ObraSocial li a {
+    color: inherit;         
+    text-decoration: none;    
+    display: inline-block;   
 
+}
 .catalogo{
     background: #fff;
     margin-bottom: 0px;
@@ -190,18 +188,15 @@ footer{
     margin-top: 50px;
 }
 
-/* Estilos pagina de CONTACTO */
-
 
 .contendor_contacto{
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Section Hero */
 .hero {
   position: relative;
-  height: 80vh; /* ocupa toda la altura de la pantalla */
+  height: 80vh;
   background: url('../img/hero.jpg') no-repeat center center/cover;
   display: flex;
   align-items: center;
@@ -219,13 +214,12 @@ footer{
 }
 
 
-/* Estilos de Main */
 .main__contacto{
     display: flex;
     flex-direction: column;
 }
 
-/* Estilos de la section main__contacto__info de Main */
+
 .main__contacto__info{
     display: flex;
     justify-content: space-between;
@@ -247,7 +241,6 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
 box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;    margin-left:  1rem;
 }
 
-/* Estilo de la section main__contacto__mapa de Main */
 
 .main__contacto__mapa{
     width: 100%;
@@ -261,7 +254,6 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
 }
 
 
-/* Estilo para la section de formulario*/
 .main_contacto_form {
   margin-top: 2rem;
   background: #f9f9f9;
@@ -340,7 +332,7 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
   border-radius: 8px;
 }
 
-/* Botón */
+
 .main_contacto_form__boton {
   margin-top: 10px;
   padding: 12px;
@@ -352,16 +344,15 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
 }
 
 .main_contacto_form__boton--primario {
-  background: #007bff;
+  background: #3b6e69;
   color: #fff;
 }
 
 .main_contacto_form__boton--primario:hover {
-  background: #0056b3;
+  background: #3b6e69;
 }
 
 
-/* Estilo de section oficinas de Main*/
 .main__contacto__oficinas{
   flex-direction: flex;
   flex-direction: column;
@@ -376,8 +367,6 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
 }
 
 
-
-/* Responsive: columnas en telefono */
 @media (max-width: 768px) {
     .main__contacto__info{
       display: flex;
@@ -395,7 +384,7 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
   }
 }
 
-/* cards */
+
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -404,3 +393,4 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
 }
+
