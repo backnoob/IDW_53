@@ -1,49 +1,184 @@
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLINICA MEDICA IDW S.A</title>
 
     <link rel="stylesheet" href="css/estilos.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
+
 <body>
-    <header>
-        <h1>IDW S.A.</h1> 
-        <h1>Clínica Médica</h1>
-            <nav>
-                <ul>
-                    <li><a href="inicio.html">Inicio</a></li>
-                    <li><a href="institucional.html">Institucional</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </nav>
-    </header>
-    <main>    
-       
-        <section class="catalogo institucional">
-            <h2>Contacto</h2>
-            <div class="contacto">
-                <div>
-                    <p>Email: informacion@idw-sa.com</p>
-                    <p>Telefono: +54 381 1234567</p>
-                    <p>Direccion: Sabin 750, San miguel de tucuman</p>
-                </div>  
+    <header class="header__contacto">
+        <nav class="nav contenedor d-none d-lg-flex">
+            <picture class="nav__logo">
+                <img src="img/logo2.png" alt="" />
+            </picture>
+            <ul class="nav__menu">
+                <li class="nav__menu__hijo">
+                    <a href="inicio.html" class="a-1">Inicio</a>
+                </li>
+                <li class="nav__menu__hijo">
+                    <a href="institucional.html">Institucional</a>
+                </li>
+                <li class="nav__menu__hijo">
+                    <a href="contacto.html">Contacto</a>
+                </li>
+            </ul>
+        </nav>
+
+        <nav class="navbar navbar-light bg-light d-lg-none">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+
+                <a class="navbar-brand" href="#">
+                    <img src="img/logo2.png" alt="Logo" width="50" height="50">
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"
+                    aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mobileMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="institucional.html">Institucional</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
             </div>
-            <p class="volver boton"><a href="inicio.html">Volver a la pagina principal</a></p>
+        </nav>
+    </header>
+
+
+    <main class="main__contacto contendor_contacto">
+        <section class="main__contacto__info">
+            <div class="main__contacto__info-email">
+                <h2>Email</h2>
+                <p>Escribinos a través de nuestro correo electrónico y recibí una respuesta rápida a tus consultas
+                    médicas o administrativas. En <strong>IDW S.A.</strong> estamos para orientarte y brindarte la
+                    información que necesitás.</p>
+                <p><i class="fa-solid fa-envelope"></i> <a href="mailto:contacto@idwsa.com">contacto@idwsa.com</a></p>
+            </div>
+
+            <div class="main__contacto__info-direccion">
+                <h2>Dirección</h2>
+                <p>Nuestra sede central está preparada para recibirte en un entorno seguro y profesional. Acercate a
+                    <strong>IDW S.A.</strong> y encontrá la atención médica que merecés, con el respaldo de nuestro
+                    equipo especializado.
+                </p>
+                <p><i class="fa-solid fa-location-dot"></i> Av. Siempreviva 742, Buenos Aires, Argentina</p>
+            </div>
+        </section>
+
+        <sectioon class="main__contacto__mapa">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26272.62535426909!2d-58.43203147870088!3d-34.60218480371401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca3b4ef90cbd%3A0xa0b3812e88e88e87!2sBuenos%20Aires%2C%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1759342955798!5m2!1ses-419!2sar"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </sectioon>
+
+
+        <section id="consulta-online" class="main_contacto_form">
+            <div class="main_contacto_form__contenedor">
+               
+                <div class="main_contacto_form__columna main_contacto_form__columna--formulario">
+                    <h2 class="main_contacto_form__titulo">Solicitar Consulta Online</h2>
+                    <p class="main_contacto_form__descripcion">
+                        Complete el formulario y nuestro equipo de <strong>IDW S.A.</strong> se pondrá en contacto con
+                        usted para coordinar su consulta médica en línea.
+                    </p>
+
+                    <form action="#" method="#" class="main_contacto_form__formulario">
+                        <div class="main_contacto_form__fila">
+                            <div class="main_contacto_form__grupo">
+                                <label for="nombre" class="main_contacto_form__label">Nombre</label>
+                                <input type="text" id="nombre" name="nombre" placeholder="Nombre"
+                                    class="main_contacto_form__input" required>
+                            </div>
+                            <div class="main_contacto_form__grupo">
+                                <label for="apellido" class="main_contacto_form__label">Apellido</label>
+                                <input type="text" id="apellido" name="apellido" placeholder="Apellido"
+                                    class="main_contacto_form__input" required>
+                            </div>
+                        </div>
+
+                        <div class="main_contacto_form__fila">
+                            <div class="main_contacto_form__grupo">
+                                <label for="correo" class="main_contacto_form__label">Correo electrónico</label>
+                                <input type="email" id="correo" name="correo" placeholder="Correo electrónico"
+                                    class="main_contacto_form__input" required>
+                            </div>
+                            <div class="main_contacto_form__grupo">
+                                <label for="especialidad" class="main_contacto_form__label">Especialidad</label>
+                                <select id="especialidad" name="especialidad" class="main_contacto_form__select"
+                                    required>
+                                    <option value="">Seleccione</option>
+                                    <option value="cardiologia">Cardiología</option>
+                                    <option value="dermatologia">Dermatología</option>
+                                    <option value="pediatria">Pediatría</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="main_contacto_form__fila">
+                            <div class="main_contacto_form__grupo">
+                                <label for="fecha" class="main_contacto_form__label">Fecha</label>
+                                <input type="date" id="fecha" name="fecha" class="main_contacto_form__input" required>
+                            </div>
+                            <div class="main_contacto_form__grupo">
+                                <label for="hora" class="main_contacto_form__label">Hora</label>
+                                <input type="time" id="hora" name="hora" class="main_contacto_form__input" required>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="main_contacto_form__boton main_contacto_form__boton--primario">Enviar</button>
+                    </form>
+                </div>
+
+                
+                <div class="main_contacto_form__columna main_contacto_form__columna--imagen">
+                    <img src="img/pexels-ivan-samkov-4989149.jpg" alt="Consulta médica online"
+                        class="main_contacto_form__imagen" />
+                </div>
+            </div>
+        </section>
+
+
+        <section class="main__contacto__oficinas">
+            <div class="main__contacto__oficinas__oficina2">
+                <h3>IDW S.A - Centro 1</h3>
+                <p>Calle Marcus 3502, Geraldine, C.P. 3597, Argentina</p>
+                <div class="main__contacto__oficinas__oficina1-contacto">
+                    <p>Correo: centro1@idwsa.com</p>
+                    <p>Teléfono: 731-235-7993</p>
+                </div>
+            </div>
+
+            <div class="main__contacto__oficinas__oficina2">
+                <h3>IDW S.A - Centro 2</h3>
+                <p>Calle San Martín 1287, Rosario, C.P. 2000, Argentina</p>
+                <div class="main__contacto__oficinas__oficina1-contacto">
+                    <p>Correo: centro2@idwsa.com</p>
+                    <p>Teléfono: 571-755-1793</p>
+                </div>
+            </div>
         </section>
     </main>
 </body>
 
 <footer>
-        <p>Copyright &copy; 2025 Todos los derechos reservados.</p>
+    <p>Copyright &copy; 2025 Todos los derechos reservados.</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/31f38c55fe.js" crossorigin="anonymous"></script>
 </body>
+
 </html>
-
-
-
-
-
-
