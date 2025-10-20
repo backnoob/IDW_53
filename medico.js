@@ -60,8 +60,20 @@ function renderTablaMedicos() {
             <td>${medico.telefono}</td>
             <td>${medico.obraSocial}</td>
             <td>${medico.email}</td>
+            <td>
+                <button class="btn btn-danger btn-sm eliminar-btn" data-id="${medico.id}">
+                    🗑️ Eliminar
+                </button>
+            </td>
         `;
         tablaBody.appendChild(fila);
+    });
+
+    document.querySelectorAll(".eliminar-btn").forEach(boton => {
+        boton.addEventListener("click", (e) => {
+            const id = parseInt(e.target.dataset.id);
+            eliminarMedico(id);
+        });
     });
 }
 
@@ -88,3 +100,11 @@ form.addEventListener('submit', (e) => {
     renderTablaMedicos();
     form.reset();
 });
+
+function eliminarMedico(id) {
+    const medicos = JSON.parse(localStorage.getItem('medicos')) || [];
+    const medicosActualizados = medicos.filter(medico => medico.id !== id);
+    localStorage.setItem('medicos', JSON.stringify(medicosActualizados));
+    renderTablaMedicos();
+    renderMedicos();
+}
