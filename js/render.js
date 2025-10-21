@@ -46,27 +46,27 @@ export function renderTablaMedicos() {
             <td>${medico.obraSocial}</td>
             <td>${medico.email}</td>
             <td>
-                <button class="btn btn-danger btn-sm eliminar-btn" data-id="${medico.id}">
-                    Eliminar
-                </button>
-                <button class="btn btn-primary btn-sm eliminar-btn" data-id="${medico.id}">
-                    Editar
-                </button>
-                <button class="btn btn-success btn-sm eliminar-btn" data-id="${medico.id}">
-                    Alta
-                </button>
+                <button class="btn btn-danger btn-sm eliminar-btn" data-id="${medico.id}"data-nombre="${medico.nombre}">Eliminar</button>
+                <button class="btn btn-primary btn-sm editar-btn" data-id="${medico.id}">Editar</button>
+                <button class="btn btn-success btn-sm alta-btn" data-id="${medico.id}">Alta</button>
             </td>
         `;
         tablaBody.appendChild(fila);
     });
 
     // Evento eliminar
+
     document.querySelectorAll(".eliminar-btn").forEach(boton => {
-        boton.addEventListener("click", e => {
-            const id = parseInt(e.target.dataset.id);
+    boton.addEventListener("click", e => {
+    const id = parseInt(e.target.dataset.id);
+    const nombre = e.target.dataset.nombre;
+    const confirmar = confirm(`¿Desea eliminar al médico ${nombre}?`);
+        if (confirmar) {
             eliminarMedico(id);
             renderTablaMedicos();
             renderMedicos();
+        }
         });
     });
+
 }
