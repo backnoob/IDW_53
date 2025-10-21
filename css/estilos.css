@@ -443,6 +443,7 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
 
 .card-img-top {
   transition: transform 0.3s;
+  object-fit: cover;
 }
 
 .card:hover .card-img-top {

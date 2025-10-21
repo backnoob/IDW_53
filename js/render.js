@@ -9,7 +9,6 @@ export function renderMedicos(containerSelector = "#medicos-row") {
     const medicos = getMedicos();
     medicos.forEach(medico => {
         const card = document.createElement("div");
-        // Vertical cards: 4 por fila en desktop
         card.classList.add("col-12", "col-md-6", "col-lg-3");
         card.innerHTML = `
         <div class="card h-100 border-0 shadow-sm rounded-4">
@@ -31,7 +30,6 @@ export function renderMedicos(containerSelector = "#medicos-row") {
 }
 
 
-// Renderiza la tabla de administración
 export function renderTablaMedicos() {
     const tablaBody = document.querySelector("#tablaMedicos tbody");
     if (!tablaBody) return;
@@ -49,10 +47,8 @@ export function renderTablaMedicos() {
             <td>${medico.obraSocial}</td>
             <td>${medico.email}</td>
             <td>
-                <button class="btn btn-danger btn-sm eliminar-btn" data-id="${medico.id}">
-                    Eliminar
-                </button>
-                <button class="btn btn-primary btn-sm eliminar-btn" data-id="${medico.id}">
+                <button class="btn btn-danger btn-sm eliminar-btn" data-id="${medico.id}"data-nombre="${medico.nombre}">Eliminar</button>
+                <button class="btn btn-primary btn-sm editar-btn" data-id="${medico.id}">
                     Editar
                 </button>
                 <button class="btn btn-success btn-sm eliminar-btn" data-id="${medico.id}">
@@ -61,15 +57,42 @@ export function renderTablaMedicos() {
             </td>
         `;
         tablaBody.appendChild(fila);
+
+        const btnEditar = fila.querySelector(".editar-btn");
+        btnEditar.addEventListener("click", () => {
+            editarMedico(medico.id);
+        })
     });
 
-    // Evento eliminar
+    function editarMedico(id) {
+
+        const medico = medicos.find(m => m.id === id);
+        if (!medico) return;
+
+        document.getElementById('edicionMedicoId').value = medico.id;
+        document.getElementById('edicionNombre').value = medico.nombre;
+        document.getElementById('edicionEspecialidad').value = medico.especialidad;
+        document.getElementById('edicionTelefono').value = medico.telefono;
+        document.getElementById('edicionObraSocial').value = medico.obraSocial;
+        document.getElementById('edicionEmail').value = medico.email;
+
+        document.getElementById('edicionMedicoForm').scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
     document.querySelectorAll(".eliminar-btn").forEach(boton => {
         boton.addEventListener("click", e => {
             const id = parseInt(e.target.dataset.id);
-            eliminarMedico(id);
-            renderTablaMedicos();
-            renderMedicos();
+            const nombre = e.target.dataset.nombre;
+            const confirmar = confirm(`¿Desea eliminar al médico ${nombre}?`);
+            if (confirmar) {
+                eliminarMedico(id);
+                renderTablaMedicos();
+                renderMedicos();
+            }
         });
     });
+
 }
+
