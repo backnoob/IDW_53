@@ -16,5 +16,15 @@ export const medicosIniciales = [
         obraSocial: "Swiss Medical",
         email: "ana@ejemplo.com",
         foto: "img/default-doctor.jpg"
+    },
+      {
+        id: 2,
+        nombre: "Bielsa Marcelo",
+        especialidad: "Dermatología",
+        telefono: "987654321",
+        obraSocial: "OSDE",
+        email: "ana@ejemplo.com",
+        foto: "img/default-doctor.jpg"
     }
+  
 ];

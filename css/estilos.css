@@ -1,11 +1,17 @@
-body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: #f4f4f4;
-    margin:0;
-    color: #161616;
-    line-height: 1.6;
+html {
+    height: 100%;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    margin: 0;
+}
+
+main {
+    flex: 1 0 auto; /* ocupa todo el espacio disponible */
+}
 header .nav{
     height: 15vh;
     display: flex;
@@ -117,15 +123,14 @@ section h2{
     box-shadow: rgb(202, 202, 202);
     border-radius: 0px;
 }
-.Medicos{
+.Medicos {
     display: grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     padding: 20px 0;
-    display: flex;
     justify-content: center;
-
 }
+
 
 .contacto{
     grid-template-columns:repeat(4,1fr);
