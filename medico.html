@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,10 @@
     <link rel="stylesheet" href="css/estilos.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="js/medico.js" defer></script>
 </head>
+
 <body>
     <header>
         <nav class="nav contenedor d-none d-lg-flex">
@@ -21,85 +25,131 @@
                 <li class="nav__menu__hijo"><a href="contacto.html">Contacto</a></li>
             </ul>
         </nav>
-
-        <nav class="navbar navbar-light bg-light d-lg-none">
-            <div class="container-fluid d-flex justify-content-between align-items-center">
-                <a class="navbar-brand" href="#">
-                    <img src="img/logo2.png" alt="Logo" width="250">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"
-                    aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="mobileMenu">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="inicio.html">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="institucional.html">Institucional</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
     </header>
 
-    <!-- Tabla de Médicos -->
-<section class="mb-5">
-    <h2 class="mb-3">Listado de Médicos</h2>
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered" id="tablaMedicos">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Especialidad</th>
-                    <th>Teléfono</th>
-                    <th>Obra Social</th>
-                    <th>Email</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Aquí se van a insertar los médicos desde JS -->
-            </tbody>
-        </table>
+    <section class="mb-5 container">
+        <h2 class="mb-3">Listado de Médicos</h2>
+        <button class="btn btn-success mb-3" id="btnAltaMedico">Agregar Médico</button>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered" id="tablaMedicos">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Especialidad</th>
+                        <th>Teléfono</th>
+                        <th>Obra Social</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <main class="container mt-5"></main>
+    <div class="modal fade" id="modalAltaMedico" tabindex="-1" aria-labelledby="modalAltaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="modalAltaLabel">Registrar nuevo médico</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="altaMedicoForm">
+                        <div class="mb-3">
+                            <label for="altaNombre" class="form-label">Nombre y Apellido</label>
+                            <input type="text" class="form-control" id="altaNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="altaEspecialidad" class="form-label">Especialidad</label>
+                            <input type="text" class="form-control" id="altaEspecialidad" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="altaTelefono" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="altaTelefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select" id="altaObraSocial" required>
+                                <option value="">Seleccioná una obra social</option>
+                                <option value="Medicus">Medicus</option>
+                                <option value="Galeano">Galeano</option>
+                                <option value="Italmedica">Italmedica</option>
+                                <option value="OSDE">OSDE</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="altaEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="altaEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="altaFoto" class="form-label">Foto</label>
+                            <input type="file" class="form-control" id="altaFoto" accept="image/*">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="guardarAltaBtn" class="btn btn-success">Guardar</button>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
+
+    <div class="modal fade" id="modalEditarMedico" tabindex="-1" aria-labelledby="modalEditarMedicoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalEditarMedicoLabel">Editar Médico</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edicionMedicoForm">
+                        <input type="hidden" id="edicionMedicoId">
+                        <div class="mb-3">
+                            <label for="edicionNombre" class="form-label">Nombre y Apellido</label>
+                            <input type="text" class="form-control" id="edicionNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edicionEspecialidad" class="form-label">Especialidad</label>
+                            <input type="text" class="form-control" id="edicionEspecialidad" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edicionTelefono" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="edicionTelefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select" id="edicionObraSocial" required>
+                                <option value="" disabled selected hidden>Seleccioná una obra social</option>
+                                <option value="Medicus">Medicus</option>
+                                <option value="Galeano">Galeano</option>
+                                <option value="Italmedica">Italmedica</option>
+                                <option value="OSDE">OSDE</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edicionEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="edicionEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edicionFoto" class="form-label">Foto</label>
+                            <input type="file" class="form-control" id="edicionFoto" accept="image/*">
+                        </div>
 
 
-    <main class="container mt-5">
-        <section class="mb-5">
-            <h2 class="mb-3">Alta de Médicos</h2>
-            <form id="altaMedicoForm" class="border rounded p-4 bg-light shadow-sm">
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre y Apellido</label>
-                    <input type="text" class="form-control" id="nombre" required>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="especialidad" class="form-label">Especialidad</label>
-                    <input type="text" class="form-control" id="especialidad" required>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="edicionMedicoForm" class="btn btn-primary">Guardar Cambios</button>
                 </div>
-                <div class="mb-3">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="tel" class="form-control" id="telefono" required>
-                </div>
-                <div class="mb-3">
-                    <label for="obraSocial" class="form-label">Obras Sociales (separadas por coma)</label>
-                    <input type="text" class="form-control" id="obraSocial"
-                        placeholder="OSDE, IOMA, Swiss Medical" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Registrar Médico</button>
-            </form>
-        </section>
-
-   <section class="catalogo d-none">
-  <div class="container">
-    <div class="row g-4 justify-content-center"></div>
-  </div>
-</section>
+            </div>
+        </div>
+    </div>
 
     </main>
 
@@ -109,4 +159,5 @@
 
     <script type="module" src="./js/medico.js" defer></script>
 </body>
+
 </html>
