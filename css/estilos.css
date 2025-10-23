@@ -51,7 +51,7 @@ nav ul li{
 }
 
 nav ul a{
-    color: black;
+    color: rgb(104, 104, 104);
     font-weight: 500;
     font-size: 20px;
     text-decoration: none;
@@ -81,7 +81,6 @@ section {
     background: #fff;
     padding: 20px;
     margin-bottom: 20px;
-    border-radius: 8px;
 }
 
 section h2{
