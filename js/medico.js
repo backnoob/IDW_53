@@ -5,7 +5,6 @@ inicializarLocalStorage();
 renderMedicos();
 renderTablaMedicos();
 
-
 const btnAltaMedico = document.getElementById('btnAltaMedico');
 const modalAlta = new bootstrap.Modal(document.getElementById('modalAltaMedico'));
 const formAlta = document.getElementById('altaMedicoForm');
