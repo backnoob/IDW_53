@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="css/estilos.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="js/medico.js" defer></script>
 </head>
 
 <body>
@@ -31,9 +32,6 @@
                 </li>
                 <li class="nav__menu__hijo">
                     <a href="contacto.html">Contacto</a>
-                </li>
-                <li class="nav__menu__hijo">
-                    <a href="login.html">Login</a>
                 </li>
             </ul>
         </nav>
@@ -58,74 +56,44 @@
                         <li class="nav-item"><a class="nav-link" href="inicio.html">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="institucional.html">Institucional</a></li>
                         <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
-                        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Clínica Médica IDW</h1>
-            <p>Profesionalismo, confianza y cuidado para tu salud</p>
-        </div>
+
+    <section class="mb-5 container">
+        <h2 class="mb-3">Opciones de Administrador</h2>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="medico.html">Altas/Bajas de Medicos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Ver/Editar Turnos</a>
+                        </li>
+                            <a class="navbar-brand" id="logoutBtn" href="#">Cerrar Sesion</a>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem('accessToken');
+    window.location.href = 'inicio.html';
+  });
+</script>
+
     </section>
 
 
-
-    <main>
-        <section class="ObraSocial">
-            <h2>Obras Sociales con las que trabajamos </h2>
-            <ul>
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#obraModal">Medicus</a></li>
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#obraModal">Galeano</a></li>
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#obraModal">Italmedica</a></li>
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#obraModal">Osde</a></li>
-            </ul>
-        </section>
-
-        <div class="modal fade" id="obraModal" tabindex="-1" aria-labelledby="obraModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="obraModalLabel">Aviso</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        Próximamente actualizaremos la informacion a cerca de la cobertura de esta obra social!
-                        Disculpen las molestias!
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="main_contacto_form__boton" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <section class="catalogo">
-            <div class="container-fluid">
-                <div class="row g-4" id="medicos-row">
-                <div id="cardsMedicos" class="d-flex flex-wrap justify-content-center"></div>
-
-                </div>
-            </div>
-
-        </section>
-    </main>
-
-
-    <footer>
-        <p>Copyright &copy; 2025 Todos los derechos reservados.</p>
-    </footer>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
     <script type="module" src="./js/medico.js" defer></script>
     <script type="module" src="./js/auth.js" defer></script>
-
 
 </body>
 
