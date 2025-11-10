@@ -35,19 +35,14 @@ export function renderMedicos() {
         <h5 class="card-title">${medico.nombre} ${medico.apellido}</h5>
         <p class="card-text">${descripcion}</p>
         <p><strong>Valor:</strong> $${valor.toFixed(2)}</p>
-        <button class="btn btn-primary btn-sm" data-id="${medico.id}">Editar</button>
-        <button class="btn btn-danger btn-sm" data-id="${medico.id}">Eliminar</button>
+        <button class="btn btn-primary btn-sm" >Sacar Turno</button>
+        
       </div>
     `;
 
     contenedor.appendChild(card);
 
-    card.querySelector(".btn-primary").onclick = () => window.abrirModalEdicion(medico.id);
-    card.querySelector(".btn-danger").onclick = () => {
-      eliminarMedico(medico.id);
-      renderMedicos();
-      renderTablaMedicos();
-    };
+   
   });
 }
 
