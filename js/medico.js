@@ -1,112 +1,105 @@
 import { inicializarLocalStorage, getMedicos, saveMedicos } from './storage.js';
 import { renderMedicos, renderTablaMedicos } from './render.js';
 
-inicializarLocalStorage();
-renderMedicos();
-renderTablaMedicos();
+let editandoId = null;
+let modalAlta;
 
-const btnAltaMedico = document.getElementById('btnAltaMedico');
-const modalAlta = new bootstrap.Modal(document.getElementById('modalAltaMedico'));
-const formAlta = document.getElementById('altaMedicoForm');
-const btnGuardarAlta = document.getElementById('guardarAltaBtn');
+document.addEventListener('DOMContentLoaded', () => {
+  inicializarLocalStorage();
+  renderMedicos();
+  renderTablaMedicos();
 
-btnAltaMedico.addEventListener('click', () => {
+  const btnAltaMedico = document.getElementById('btnAltaMedico');
+  const modalElement = document.getElementById('modalAltaMedico');
+  modalAlta = new bootstrap.Modal(modalElement);
+  const formAlta = document.getElementById('altaMedicoForm');
+  const btnGuardarAlta = document.getElementById('guardarAltaBtn');
+
+  btnAltaMedico.addEventListener('click', () => {
     formAlta.reset();
+    editandoId = null;
+    btnGuardarAlta.textContent = 'Guardar';
+    document.getElementById('modalAltaMedicoLabel').textContent = 'Alta de Médico';
     modalAlta.show();
-});
+  });
 
-btnGuardarAlta.addEventListener('click', () => {
+  btnGuardarAlta.addEventListener('click', () => {
     const medicos = getMedicos();
 
-    const nuevoMedico = {
-        id: medicos.length ? medicos[medicos.length - 1].id + 1 : 1,
-        nombre: document.getElementById('altaNombre').value,
-        especialidad: document.getElementById('altaEspecialidad').value,
-        telefono: document.getElementById('altaTelefono').value,
-        obraSocial: document.getElementById('altaObraSocial').value,
-        email: document.getElementById('altaEmail').value,
-        foto: "img/default-doctor.jpg"
+    const obrasSocialesSeleccionadas = Array.from(
+      document.getElementById('altaObrasSociales').selectedOptions
+    ).map(opt => parseInt(opt.value));
+
+    const datosMedico = {
+      matricula: parseInt(document.getElementById('altaMatricula').value) || 0,
+      apellido: document.getElementById('altaApellido').value.trim(),
+      nombre: document.getElementById('altaNombre').value.trim(),
+      especialidadId: parseInt(document.getElementById('altaEspecialidad').value) || 0,
+      descripcion: document.getElementById('altaDescripcion').value.trim(),
+      obrasSociales: obrasSocialesSeleccionadas,
+      valorConsulta: parseFloat(document.getElementById('altaValorConsulta').value) || 0,
+      email: document.getElementById('altaEmail').value.trim(),
+      foto: "img/default-doctor.jpg"
     };
 
     const archivoFoto = document.getElementById('altaFoto').files[0];
-
     if (archivoFoto) {
-        const reader = new FileReader();
-        reader.onload = e => {
-            nuevoMedico.foto = e.target.result;
-            medicos.push(nuevoMedico);
-            saveMedicos(medicos);
-            renderMedicos();
-            renderTablaMedicos();
-            formAlta.reset();
-            modalAlta.hide();
-        };
-        reader.readAsDataURL(archivoFoto);
+      const reader = new FileReader();
+      reader.onload = e => {
+        datosMedico.foto = e.target.result;
+        guardarMedico(medicos, datosMedico, formAlta);
+      };
+      reader.readAsDataURL(archivoFoto);
     } else {
-        medicos.push(nuevoMedico);
-        saveMedicos(medicos);
-        renderMedicos();
-        renderTablaMedicos();
-        formAlta.reset();
-        modalAlta.hide();
+      guardarMedico(medicos, datosMedico, formAlta);
     }
+  });
 });
 
-
-const modalEdicion = new bootstrap.Modal(document.getElementById('modalEditarMedico'));
-const formEdicion = document.getElementById('edicionMedicoForm');
-
-formEdicion.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const id = parseInt(document.getElementById('edicionMedicoId').value);
-    const medicos = getMedicos();
-    const index = medicos.findIndex(m => m.id === id);
-    if (index === -1) return;
-
-    const archivoFoto = document.getElementById('edicionFoto').files[0];
-
-    const guardarCambios = (foto) => {
-        medicos[index] = {
-            ...medicos[index],
-            nombre: document.getElementById('edicionNombre').value.trim(),
-            especialidad: document.getElementById('edicionEspecialidad').value.trim(),
-            telefono: document.getElementById('edicionTelefono').value.trim(),
-            obraSocial: document.getElementById('edicionObraSocial').value.trim(),
-            email: document.getElementById('edicionEmail').value.trim(),
-            foto
-        };
-
-        saveMedicos(medicos);
-        renderMedicos();
-        renderTablaMedicos();
-        modalEdicion.hide();
-        formEdicion.reset();
-    };
-
-    if (archivoFoto) {
-        const reader = new FileReader();
-        reader.onload = e => guardarCambios(e.target.result);
-        reader.readAsDataURL(archivoFoto);
-    } else {
-        guardarCambios(medicos[index].foto);
+function guardarMedico(medicos, datosMedico, formAlta) {
+  if (editandoId) {
+    const index = medicos.findIndex(m => m.id === editandoId);
+    if (index !== -1) {
+      medicos[index] = { ...medicos[index], ...datosMedico };
     }
-});
+  } else {
+    const nuevoId = medicos.length ? medicos[medicos.length - 1].id + 1 : 1;
+    medicos.push({ id: nuevoId, ...datosMedico });
+  }
 
-export function abrirModalEdicion(medicoId) {
-    const medicos = getMedicos();
-    const medico = medicos.find(m => m.id === medicoId);
-    if (!medico) return;
-
-    document.getElementById('edicionMedicoId').value = medico.id;
-    document.getElementById('edicionNombre').value = medico.nombre;
-    document.getElementById('edicionEspecialidad').value = medico.especialidad;
-    document.getElementById('edicionTelefono').value = medico.telefono;
-    document.getElementById('edicionObraSocial').value = medico.obraSocial || "";
-    document.getElementById('edicionEmail').value = medico.email;
-
-    const inputFoto = document.getElementById('edicionFoto');
-    if (inputFoto) inputFoto.value = "";
-
-    modalEdicion.show();
+  saveMedicos(medicos);
+  renderMedicos();
+  renderTablaMedicos();
+  formAlta.reset();
+  modalAlta.hide(); 
+  editandoId = null;
 }
+
+export function abrirModalEdicion(id) {
+  const medicos = getMedicos();
+  const medico = medicos.find(m => m.id === id);
+  if (!medico) return;
+
+  editandoId = id;
+
+  document.getElementById('altaMatricula').value = medico.matricula || "";
+  document.getElementById('altaApellido').value = medico.apellido || "";
+  document.getElementById('altaNombre').value = medico.nombre || "";
+  document.getElementById('altaEspecialidad').value = medico.especialidadId || "";
+  document.getElementById('altaDescripcion').value = medico.descripcion || "";
+  document.getElementById('altaValorConsulta').value = medico.valorConsulta || "";
+  document.getElementById('altaEmail').value = medico.email || "";
+
+  const selectObras = document.getElementById('altaObrasSociales');
+  Array.from(selectObras.options).forEach(opt => {
+    opt.selected = medico.obrasSociales?.includes(parseInt(opt.value));
+  });
+
+  const btnGuardarAlta = document.getElementById('guardarAltaBtn');
+  btnGuardarAlta.textContent = 'Guardar Cambios';
+  document.getElementById('modalAltaMedicoLabel').textContent = 'Editar Médico';
+
+  modalAlta.show();
+}
+
+window.abrirModalEdicion = abrirModalEdicion;

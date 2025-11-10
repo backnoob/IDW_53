@@ -1,75 +1,90 @@
-import { getMedicos, eliminarMedico } from './storage.js';
-import { abrirModalEdicion } from './medico.js';
+import { getMedicos, eliminarMedico } from "./storage.js";
+import { abrirModalEdicion } from "./medico.js";
+import { especialidades, obrasSociales } from "./data.js";
 
-export function renderMedicos(containerSelector = "#medicos-row") {
-    var container = document.querySelector(containerSelector);
-    if (!container) return;
-
-    container.innerHTML = "";
-    var medicos = getMedicos();
-
-    for (var i = 0; i < medicos.length; i++) {
-        var medico = medicos[i];
-        var card = document.createElement("div");
-        card.className = "col-12 col-md-6 col-lg-3";
-        card.innerHTML = 
-            '<div class="card h-100 border-0 shadow-sm rounded-4">' +
-            '<img src="' + (medico.foto || 'img/default-doctor.jpg') + 
-            '" class="card-img-top rounded-top-4" style="height:250px; object-fit:cover;" alt="Dr. ' + medico.nombre + '">' +
-            '<div class="card-body d-flex flex-column">' +
-            '<h5 class="card-title fw-bold">' + medico.nombre + '</h5>' +
-            '<p class="card-text mb-1"><strong>Especialidad:</strong> ' + medico.especialidad + '</p>' +
-            '<p class="card-text mb-2"><strong>Obra social:</strong> ' + medico.obraSocial + '</p>' +
-            '<a href="#" class="btn btn-primary mt-auto rounded-pill">Agendar turno</a>' +
-            '</div></div>';
-
-        container.appendChild(card);
-
-        var btn = card.querySelector("a");
-        btn.onclick = function(e) {
-            e.preventDefault();
-            alert("Próximamente podrán sacar turno");
-        };
-    }
+function getNombreEspecialidad(id) {
+  const esp = especialidades.find(e => e.id === id);
+  return esp ? esp.nombre : '-';
 }
 
+function getNombresObrasSociales(ids = []) {
+  return ids.map(id => {
+    const os = obrasSociales.find(o => o.id === id);
+    return os ? os.nombre : '-';
+  }).join(', ');
+}
+export function renderMedicos() {
+  const contenedor = document.getElementById("cardsMedicos");
+  if (!contenedor) return;
+
+  const medicos = getMedicos();
+  contenedor.innerHTML = "";
+
+  medicos.forEach(medico => {
+    const card = document.createElement("div");
+    card.className = "card text-center p-3 m-2";
+    card.style.width = "18rem";
+
+    const valor = Number(medico.valorConsulta) || 0;
+    const descripcion = medico.descripcion || "";
+    const foto = medico.foto || "img/default-doctor.jpg";
+
+    card.innerHTML = `
+      <img src="${foto}" class="card-img-top" alt="${medico.nombre}">
+      <div class="card-body">
+        <h5 class="card-title">${medico.nombre} ${medico.apellido}</h5>
+        <p class="card-text">${descripcion}</p>
+        <p><strong>Valor:</strong> $${valor.toFixed(2)}</p>
+        <button class="btn btn-primary btn-sm" data-id="${medico.id}">Editar</button>
+        <button class="btn btn-danger btn-sm" data-id="${medico.id}">Eliminar</button>
+      </div>
+    `;
+
+    contenedor.appendChild(card);
+
+    card.querySelector(".btn-primary").onclick = () => window.abrirModalEdicion(medico.id);
+    card.querySelector(".btn-danger").onclick = () => {
+      eliminarMedico(medico.id);
+      renderMedicos();
+      renderTablaMedicos();
+    };
+  });
+}
+
+// Función para obtener n
 export function renderTablaMedicos() {
-    var tablaBody = document.querySelector("#tablaMedicos tbody");
-    if (!tablaBody) return;
+  const tabla = document.getElementById("tablaMedicos");
+  if (!tabla) return;
 
-    tablaBody.innerHTML = "";
-    var medicos = getMedicos();
+  const tbody = tabla.querySelector("tbody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
 
-    for (var i = 0; i < medicos.length; i++) {
-        var medico = medicos[i];
-        var fila = document.createElement("tr");
-        fila.innerHTML = 
-            '<td>' + medico.id + '</td>' +
-            '<td>' + medico.nombre + '</td>' +
-            '<td>' + medico.especialidad + '</td>' +
-            '<td>' + medico.telefono + '</td>' +
-            '<td>' + medico.obraSocial + '</td>' +
-            '<td>' + medico.email + '</td>' +
-            '<td>' +
-            '<button class="btn btn-danger btn-sm" data-id="' + medico.id + '" data-nombre="' + medico.nombre + '">Eliminar</button> ' +
-            '<button class="btn btn-primary btn-sm" data-id="' + medico.id + '">Editar</button>' +
-            '</td>';
+  const medicos = getMedicos();
 
-        tablaBody.appendChild(fila);
+  medicos.forEach(medico => {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `
+      <td>${medico.id}</td>
+      <td>${medico.nombre}</td>
+      <td>${medico.apellido}</td>
+      <td>${getNombreEspecialidad(medico.especialidadId)}</td>
+      <td>${medico.matricula || '-'}</td>
+      <td>$${(Number(medico.valorConsulta) || 0).toFixed(2)}</td>
+      <td>${getNombresObrasSociales(medico.obrasSociales)}</td>
+      <td>${medico.email || '-'}</td>
+      <td>${medico.descripcion || '-'}</td>
+      <td>
+        <button class="btn btn-primary btn-sm" data-id="${medico.id}">Editar</button>
+        <button class="btn btn-danger btn-sm" data-id="${medico.id}">Eliminar</button>
+      </td>
+    `;
+    tbody.appendChild(fila);
 
-        fila.querySelector("button.btn-danger").onclick = function() {
-            var id = parseInt(this.dataset.id);
-            var nombre = this.dataset.nombre;
-            if (confirm("¿Desea eliminar al médico " + nombre + "?")) {
-                eliminarMedico(id);
-                renderMedicos();
-                renderTablaMedicos();
-            }
-        };
-
-        fila.querySelector("button.btn-primary").onclick = function() {
-            var id = parseInt(this.dataset.id);
-            abrirModalEdicion(id);
-        };
-    }
+    fila.querySelector(".btn-primary").onclick = () => abrirModalEdicion(medico.id);
+    fila.querySelector(".btn-danger").onclick = () => {
+      eliminarMedico(medico.id);
+      renderTablaMedicos();
+    };
+  });
 }
