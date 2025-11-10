@@ -1,4 +1,4 @@
-import { medicos, especialidades, obrasSociales, turnos, reservas } from './data.js';
+import { medicos, especialidades, obrasSociales} from './data.js';
 
 export function inicializarLocalStorage() {
   if (!localStorage.getItem("medicos")) {
@@ -10,12 +10,23 @@ export function inicializarLocalStorage() {
   if (!localStorage.getItem("obrasSociales")) {
     localStorage.setItem("obrasSociales", JSON.stringify(obrasSociales));
   }
-  if (!localStorage.getItem("turnos")) {
-    localStorage.setItem("turnos", JSON.stringify(turnos));
-  }
-  if (!localStorage.getItem("reservas")) {
-    localStorage.setItem("reservas", JSON.stringify(reservas));
-  }
+
+}
+
+export function saveObrasSociales(lista) {
+  localStorage.setItem("obrasSociales", JSON.stringify(lista));
+}
+
+export function getObrasSociales() {
+  return JSON.parse(localStorage.getItem("obrasSociales")) || [];
+}
+
+export function saveEspecialidades(lista) {
+  localStorage.setItem("especialidades", JSON.stringify(lista));
+}
+
+export function getEspecialidades() {
+  return JSON.parse(localStorage.getItem("especialidades")) || [];
 }
 
 export function getMedicos() {

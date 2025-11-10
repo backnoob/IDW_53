@@ -6,11 +6,12 @@ export const especialidades = [
 ];
 
 export const obrasSociales = [
-  { id: 1, nombre: "OSDE", descripcion: "Cobertura médica nacional" },
-  { id: 2, nombre: "Swiss Medical", descripcion: "Cobertura privada premium" },
-  { id: 3, nombre: "Galeno", descripcion: "Cobertura general en hospitales asociados" },
-  { id: 4, nombre: "Particular", descripcion: "Atención sin obra social" }
+  { id: 1, nombre: "OSDE", descripcion: "Cobertura médica nacional", descuento: 0.1 }, 
+  { id: 2, nombre: "Swiss Medical", descripcion: "Cobertura privada premium", descuento: 0 }, 
+  { id: 3, nombre: "Galeno", descripcion: "Cobertura general en hospitales asociados", descuento: 0.05 }, 
+  { id: 4, nombre: "Particular", descripcion: "Atención sin obra social", descuento: 0 } 
 ];
+
 
 export const medicos = [
   {
