@@ -9,6 +9,36 @@ document.addEventListener('DOMContentLoaded', () => {
   renderMedicos();
   renderTablaMedicos();
 
+    let idMedicoAEliminar = null;
+
+    document.addEventListener('click', e => {
+      if (e.target.matches('.btn-danger[data-id]')) {
+        idMedicoAEliminar = parseInt(e.target.dataset.id);
+        const medico = getMedicos().find(m => m.id === idMedicoAEliminar);
+        const texto = medico
+          ? `¿Desea eliminar a <strong>${medico.nombre} ${medico.apellido}</strong>?`
+          : `¿Eliminar este médico?`;
+        document.getElementById('textoEliminarMedico').innerHTML = texto;
+
+        const modal = new bootstrap.Modal(document.getElementById('modalEliminarMedico'));
+        modal.show();
+      }
+    });
+
+document.getElementById('btnEliminarConfirmado').addEventListener('click', () => {
+  if (idMedicoAEliminar !== null) {
+    const lista = getMedicos().filter(m => m.id !== idMedicoAEliminar);
+    saveMedicos(lista);
+    renderMedicos();
+    renderTablaMedicos();
+    idMedicoAEliminar = null;
+  }
+  bootstrap.Modal.getInstance(document.getElementById('modalEliminarMedico')).hide();
+});
+
+
+
+
   const btnAltaMedico = document.getElementById('btnAltaMedico');
   const modalElement = document.getElementById('modalAltaMedico');
   modalAlta = new bootstrap.Modal(modalElement);

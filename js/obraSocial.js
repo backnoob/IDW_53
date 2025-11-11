@@ -84,13 +84,34 @@ tablaObras.addEventListener('click', (e) => {
   }
 
   // Eliminar obra social
-  if (e.target.classList.contains('btn-danger')) {
-    const id = parseInt(e.target.dataset.id);
-    const obras = getObrasSociales().filter(o => o.id !== id);
-    saveObrasSociales(obras);
-    renderObrasSociales();
-  }
+    if (e.target.classList.contains('btn-danger')) {
+    idObraSocialAEliminar = parseInt(e.target.dataset.id);
+    const obra = getObrasSociales().find(o => o.id === idObraSocialAEliminar);
+    const texto = obra
+      ? `¿Eliminar la obra social <strong>${obra.nombre}</strong>?`
+      : `¿Eliminar esta obra social?`;
+
+    document.getElementById('textoEliminarObraSocial').innerHTML = texto;
+
+    const modal = new bootstrap.Modal(document.getElementById('modalEliminarObraSocial'));
+    modal.show();
+    }
+
 });
+
+    let idObraSocialAEliminar = null;
+
+    document.getElementById('btnEliminarObraSocialConfirmado').addEventListener('click', () => {
+      if (idObraSocialAEliminar !== null) {
+        const obras = getObrasSociales().filter(o => o.id !== idObraSocialAEliminar);
+        saveObrasSociales(obras);
+        renderObrasSociales();
+        idObraSocialAEliminar = null;
+      }
+      bootstrap.Modal.getInstance(document.getElementById('modalEliminarObraSocial')).hide();
+    });
+
+
 
 // Inicializar tabla
 renderObrasSociales();

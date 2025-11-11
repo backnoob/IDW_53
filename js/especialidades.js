@@ -50,21 +50,32 @@ guardarBtn.addEventListener("click", () => {
   modal.hide();
 });
 
-window.editarEspecialidad = (id) => {
+
+let idEspecialidadAEliminar = null;
+window.eliminarEspecialidad = (id) => {
+  idEspecialidadAEliminar = id;
   const lista = getEspecialidades();
-  const e = lista.find(x => x.id === id);
-  editandoId = id;
-  nombreInput.value = e.nombre;
-  document.getElementById("modalAltaEspecialidadLabel").textContent = "Editar Especialidad";
-  modal.show();
+  const especialidad = lista.find(e => e.id === id);
+  const texto = especialidad
+    ? `¿Eliminar la especialidad <strong>${especialidad.nombre}</strong>?`
+    : `¿Eliminar esta especialidad?`;
+
+  document.getElementById("textoEliminarEspecialidad").innerHTML = texto;
+
+  const modalEliminar = new bootstrap.Modal(document.getElementById("modalEliminarEspecialidad"));
+  modalEliminar.show();
 };
 
-window.eliminarEspecialidad = (id) => {
-  if (!confirm("¿Eliminar esta especialidad?")) return;
-  const lista = getEspecialidades().filter(e => e.id !== id);
-  saveEspecialidades(lista);
-  renderEspecialidades();
-};
+document.getElementById("btnEliminarEspecialidadConfirmado").addEventListener("click", () => {
+  if (idEspecialidadAEliminar !== null) {
+    const lista = getEspecialidades().filter(e => e.id !== idEspecialidadAEliminar);
+    saveEspecialidades(lista);
+    renderEspecialidades();
+    idEspecialidadAEliminar = null;
+  }
+
+  bootstrap.Modal.getInstance(document.getElementById("modalEliminarEspecialidad")).hide();
+});
 
 // Inicializar tabla
 renderEspecialidades();

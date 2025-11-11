@@ -75,9 +75,10 @@ export function renderTablaMedicos() {
     tbody.appendChild(fila);
 
     fila.querySelector(".btn-primary").onclick = () => abrirModalEdicion(medico.id);
-    fila.querySelector(".btn-danger").onclick = () => {
-      eliminarMedico(medico.id);
-      renderTablaMedicos();
-    };
+    
+    fila.querySelector(".btn-danger").onclick = () => mostrarModalEliminar(medico.id);
+
+
+
   });
 }
