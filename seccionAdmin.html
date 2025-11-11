@@ -62,40 +62,41 @@
         </nav>
     </header>
 
-
-    <section class="mb-5 container">
-        <h2 class="mb-3">Opciones de Administrador</h2>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
+            <section class="mb-5 container">
+                <h2 class="mb-4 text-center fw-bold text-dark">Opciones de Administrador</h2>
+                <nav class="navbar navbar-expand-lg bg-light rounded shadow-sm border border-0 border-info">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse show" id="navbarNavDropdown">
+                    <ul class="navbar-nav d-flex flex-wrap gap-3 justify-content-center w-100 py-3">
                         <li class="nav-item">
-                            <a class="nav-link" href="medico.html">CRUD de Medicos</a>
+                        <a class="nav-link btn btn-outline-primary px-4 py-2 rounded-pill" href="medico.html">CRUD de Médicos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="editarTurnos.html">Ver/Editar Turnos</a>
+                        <a class="nav-link btn btn-outline-primary px-4 py-2 rounded-pill" href="editarTurnos.html">Ver/Editar Turnos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="obraSocial.html">CRUD de Obras Sociales</a>
+                        <a class="nav-link btn btn-outline-primary px-4 py-2 rounded-pill" href="obraSocial.html">CRUD de Obras Sociales</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="especialidades.html">CRUD de Especialidades</a>
+                        <a class="nav-link btn btn-outline-primary px-4 py-2 rounded-pill" href="especialidades.html">CRUD de Especialidades</a>
                         </li>
-                        <a class="navbar-brand" id="logoutBtn" href="#">Cerrar Sesion</a>
+                        <li class="nav-item">
+                        <a class="nav-link btn btn-outline-danger px-4 py-2 rounded-pill" id="logoutBtn" href="#">Cerrar Sesión</a>
+                        </li>
                     </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+                </nav>
+
+                <script>
+                    document.getElementById('logoutBtn').addEventListener('click', () => {
+                    sessionStorage.removeItem('accessToken');
+                    window.location.href = 'inicio.html';
+                    });
+                </script>
+            </section>
 
 
-        <script>
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                sessionStorage.removeItem('accessToken');
-                window.location.href = 'inicio.html';
-            });
-        </script>
-
-    </section>
 
 
     <script type="module" src="./js/medico.js" defer></script>
