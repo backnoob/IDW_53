@@ -120,6 +120,27 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('fecha').addEventListener('change', actualizarHorariosDisponibles);
   document.getElementById('medico').addEventListener('change', actualizarHorariosDisponibles);
 
+              const fechaInput = document.getElementById('fecha');
+              // Establecer mínimo: mañana
+              const hoy = new Date();
+              hoy.setDate(hoy.getDate() + 1);
+              const yyyy = hoy.getFullYear();
+              const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+              const dd = String(hoy.getDate()).padStart(2, '0');
+              fechaInput.min = `${yyyy}-${mm}-${dd}`;
+
+              // Bloquear sábados y domingos
+              fechaInput.addEventListener('input', () => {
+                const [year, month, day] = fechaInput.value.split('-').map(Number);
+                const fecha = new Date(year, month - 1, day);
+                const dia = fecha.getDay(); // 0 = domingo, 6 = sábado
+
+                if (dia === 0 || dia === 6) {
+                  alert('La atención no está disponible los sábados y domingos');
+                  fechaInput.value = '';
+                }
+              });  
+
   const medicos = getMedicos();
   const obras = getObrasSociales();
 
