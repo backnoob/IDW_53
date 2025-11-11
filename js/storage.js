@@ -42,3 +42,4 @@ export function eliminarMedico(id) {
   saveMedicos(medicos);
 }
 
+console.log(JSON.parse(localStorage.getItem("obrasSociales")));

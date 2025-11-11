@@ -530,3 +530,23 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
       align-items: center;
       height: 50vh;
     }
+
+#listaObrasSociales li {
+    background: #3b6e69;
+    border: 1px solid #404040;
+    border-radius: 5px;
+    padding: 6px 12px;
+    color: #fff;
+    font-weight: 500;
+    margin: 5px 0;
+}
+
+#listaObrasSociales li a {
+    color: inherit;         
+    text-decoration: none;    
+    display: inline-block;   
+}
+
+#listaObrasSociales li a:hover {
+    color: #f0f0f0;
+}

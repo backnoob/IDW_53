@@ -1,4 +1,4 @@
-// Referencias del DOM
+
 const btnAltaObraSocial = document.getElementById('btnAltaObraSocial');
 const modalObraSocial = new bootstrap.Modal(document.getElementById('modalAltaObraSocial'));
 const guardarObraSocialBtn = document.getElementById('guardarObraSocialBtn');
@@ -12,7 +12,36 @@ function saveObrasSociales(lista) {
   localStorage.setItem("obrasSociales", JSON.stringify(lista));
 }
 
-// Alta obra social
+// notificar cambios a la UI
+export function notificarCambioObrasSociales() {
+  // Disparar un evento personalizado para notificar el cambio
+  const event = new CustomEvent('obrasSocialesActualizadas');
+  document.dispatchEvent(event);
+}
+
+// renderizar tabla
+function renderObrasSociales() {
+  const obras = getObrasSociales();
+  tablaObras.innerHTML = '';
+  obras.forEach(o => {
+    const fila = document.createElement('tr');
+    fila.innerHTML = `
+      <td>${o.id}</td>
+      <td>${o.nombre}</td>
+      <td>${o.descripcion}</td>
+      <td>${o.descuento}%</td>
+      <td>
+        <button class="btn btn-primary btn-sm" data-id="${o.id}">Editar</button>
+        <button class="btn btn-danger btn-sm" data-id="${o.id}">Eliminar</button>
+      </td>`;
+    tablaObras.appendChild(fila);
+  });
+  
+  // notificar del cambio
+  notificarCambioObrasSociales();
+}
+
+// alta obra social
 btnAltaObraSocial.addEventListener('click', () => {
   document.getElementById('altaObraSocialForm').reset();
   guardarObraSocialBtn.textContent = 'Guardar';
@@ -35,26 +64,7 @@ guardarObraSocialBtn.addEventListener('click', () => {
   modalObraSocial.hide();
 });
 
-// Renderizar tabla
-function renderObrasSociales() {
-  const obras = getObrasSociales();
-  tablaObras.innerHTML = '';
-  obras.forEach(o => {
-    const fila = document.createElement('tr');
-    fila.innerHTML = `
-      <td>${o.id}</td>
-      <td>${o.nombre}</td>
-      <td>${o.descripcion}</td>
-      <td>${o.descuento}%</td>
-      <td>
-        <button class="btn btn-primary btn-sm" data-id="${o.id}">Editar</button>
-        <button class="btn btn-danger btn-sm" data-id="${o.id}">Eliminar</button>
-      </td>`;
-    tablaObras.appendChild(fila);
-  });
-}
-
-// Editar obra social
+// editar obra social
 tablaObras.addEventListener('click', (e) => {
   if (e.target.classList.contains('btn-primary')) {
     const id = parseInt(e.target.dataset.id);
@@ -83,14 +93,17 @@ tablaObras.addEventListener('click', (e) => {
     guardarObraSocialBtn.addEventListener('click', handler);
   }
 
-  // Eliminar obra social
+  // eliminar obra social
   if (e.target.classList.contains('btn-danger')) {
     const id = parseInt(e.target.dataset.id);
+    if (!confirm('¿Está seguro de que desea eliminar esta obra social?')) return;
+    
     const obras = getObrasSociales().filter(o => o.id !== id);
     saveObrasSociales(obras);
     renderObrasSociales();
+    notificarCambioObrasSociales(); // notificar cambio
   }
 });
 
-// Inicializar tabla
+// inicializar tabla
 renderObrasSociales();
