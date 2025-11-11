@@ -1,4 +1,4 @@
-import { inicializarLocalStorage, getMedicos, saveMedicos } from './storage.js';
+import { inicializarLocalStorage, getMedicos, saveMedicos, getObrasSociales } from './storage.js';
 import { renderMedicos, renderTablaMedicos } from './render.js';
 
 let editandoId = null;
@@ -15,14 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const formAlta = document.getElementById('altaMedicoForm');
   const btnGuardarAlta = document.getElementById('guardarAltaBtn');
 
+  // Botón Alta
   btnAltaMedico.addEventListener('click', () => {
     formAlta.reset();
     editandoId = null;
     btnGuardarAlta.textContent = 'Guardar';
     document.getElementById('modalAltaMedicoLabel').textContent = 'Alta de Médico';
+    cargarObrasSociales(); // cargar obras sociales al abrir el modal
     modalAlta.show();
   });
 
+  // Botón Guardar
   btnGuardarAlta.addEventListener('click', () => {
     const medicos = getMedicos();
 
@@ -56,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Función para guardar médico (alta o edición)
 function guardarMedico(medicos, datosMedico, formAlta) {
   if (editandoId) {
     const index = medicos.findIndex(m => m.id === editandoId);
@@ -71,10 +75,11 @@ function guardarMedico(medicos, datosMedico, formAlta) {
   renderMedicos();
   renderTablaMedicos();
   formAlta.reset();
-  modalAlta.hide(); 
+  modalAlta.hide();
   editandoId = null;
 }
 
+// Abrir modal para editar
 export function abrirModalEdicion(id) {
   const medicos = getMedicos();
   const medico = medicos.find(m => m.id === id);
@@ -82,6 +87,7 @@ export function abrirModalEdicion(id) {
 
   editandoId = id;
 
+  cargarObrasSociales(); // cargar opciones actualizadas
   document.getElementById('altaMatricula').value = medico.matricula || "";
   document.getElementById('altaApellido').value = medico.apellido || "";
   document.getElementById('altaNombre').value = medico.nombre || "";
@@ -103,3 +109,16 @@ export function abrirModalEdicion(id) {
 }
 
 window.abrirModalEdicion = abrirModalEdicion;
+
+// Función para cargar obras sociales en el select
+function cargarObrasSociales() {
+  const select = document.getElementById('altaObrasSociales');
+  if (!select) return;
+  select.innerHTML = '';
+  getObrasSociales().forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o.id;
+    opt.textContent = o.nombre;
+    select.appendChild(opt);
+  });
+}

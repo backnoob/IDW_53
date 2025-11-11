@@ -35,14 +35,12 @@ export function renderMedicos() {
         <h5 class="card-title">${medico.nombre} ${medico.apellido}</h5>
         <p class="card-text">${descripcion}</p>
         <p><strong>Valor:</strong> $${valor.toFixed(2)}</p>
-        <button class="btn btn-primary btn-sm" >Sacar Turno</button>
-        
+     
       </div>
     `;
 
     contenedor.appendChild(card);
 
-   
   });
 }
 

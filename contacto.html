@@ -92,6 +92,73 @@
         </sectioon>
 
 
+        <section id="consulta-online" class="main_contacto_form">
+            <div class="main_contacto_form__contenedor">
+               
+                <div class="main_contacto_form__columna main_contacto_form__columna--formulario">
+                    <h2 class="main_contacto_form__titulo">Solicitar Consulta Online</h2>
+                    <p class="main_contacto_form__descripcion">
+                        Complete el formulario y nuestro equipo de <strong>IDW S.A.</strong> se pondrá en contacto con
+                        usted para coordinar su consulta médica en línea.
+                    </p>
+
+                    <form action="#" method="#" class="main_contacto_form__formulario">
+                        <div class="main_contacto_form__fila">
+                            <div class="main_contacto_form__grupo">
+                                <label for="nombre" class="main_contacto_form__label">Nombre</label>
+                                <input type="text" id="nombre" name="nombre" placeholder="Nombre"
+                                    class="main_contacto_form__input" required>
+                            </div>
+                            <div class="main_contacto_form__grupo">
+                                <label for="apellido" class="main_contacto_form__label">Apellido</label>
+                                <input type="text" id="apellido" name="apellido" placeholder="Apellido"
+                                    class="main_contacto_form__input" required>
+                            </div>
+                        </div>
+
+                        <div class="main_contacto_form__fila">
+                            <div class="main_contacto_form__grupo">
+                                <label for="correo" class="main_contacto_form__label">Correo electrónico</label>
+                                <input type="email" id="correo" name="correo" placeholder="Correo electrónico"
+                                    class="main_contacto_form__input" required>
+                            </div>
+                            <div class="main_contacto_form__grupo">
+                                <label for="especialidad" class="main_contacto_form__label">Especialidad</label>
+                                <select id="especialidad" name="especialidad" class="main_contacto_form__select"
+                                    required>
+                                    <option value="">Seleccione</option>
+                                    <option value="cardiologia">Cardiología</option>
+                                    <option value="dermatologia">Dermatología</option>
+                                    <option value="pediatria">Pediatría</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="main_contacto_form__fila">
+                            <div class="main_contacto_form__grupo">
+                                <label for="fecha" class="main_contacto_form__label">Fecha</label>
+                                <input type="date" id="fecha" name="fecha" class="main_contacto_form__input" required>
+                            </div>
+                            <div class="main_contacto_form__grupo">
+                                <label for="hora" class="main_contacto_form__label">Hora</label>
+                                <input type="time" id="hora" name="hora" class="main_contacto_form__input" required>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="main_contacto_form__boton main_contacto_form__boton--primario">Enviar</button>
+                    </form>
+                </div>
+
+                
+                <div class="main_contacto_form__columna main_contacto_form__columna--imagen">
+                    <img src="img/pexels-ivan-samkov-4989149.jpg" alt="Consulta médica online"
+                        class="main_contacto_form__imagen" />
+                </div>
+            </div>
+        </section>
+
+
         <section class="main__contacto__oficinas">
             <div class="main__contacto__oficinas__oficina2">
                 <h3>IDW S.A - Centro 1</h3>
