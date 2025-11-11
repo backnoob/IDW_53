@@ -5,6 +5,37 @@ function getTurnos() {
   return JSON.parse(localStorage.getItem('turnos')) || [];
 }
 
+// Funcion de horariopos
+function actualizarHorariosDisponibles() {
+  const fecha = document.getElementById('fecha').value;
+  const medicoId = parseInt(document.getElementById('medico').value);
+  const horaSelect = document.getElementById('hora');
+
+  const turnos = getTurnos();
+  const horarios = [
+    "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+    "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+    "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"
+  ];
+
+  // Filtrar turnos ya reservados para ese médico y fecha
+  const ocupados = turnos
+    .filter(t => t.fecha === fecha && t.medicoId === medicoId)
+    .map(t => t.hora);
+
+  // Limpiar y volver a cargar opciones disponibles
+  horaSelect.innerHTML = '<option value="">Seleccionar hora</option>';
+  horarios.forEach(hora => {
+    if (!ocupados.includes(hora)) {
+      const option = document.createElement('option');
+      option.value = hora;
+      option.textContent = hora;
+      horaSelect.appendChild(option);
+    }
+  });
+}
+
+
 function saveTurnos(turnos) {
   localStorage.setItem('turnos', JSON.stringify(turnos));
 }
@@ -86,6 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const formTurno = document.getElementById('formTurno');
   if (!medicoSelect || !obraSelect || !formTurno) return;
 
+  document.getElementById('fecha').addEventListener('change', actualizarHorariosDisponibles);
+  document.getElementById('medico').addEventListener('change', actualizarHorariosDisponibles);
+
   const medicos = getMedicos();
   const obras = getObrasSociales();
 
@@ -136,8 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
     saveTurnos(turnos);
 
     document.getElementById('mensajeTurno').innerHTML = `<p class="text-success">Turno solicitado correctamente. Valor final: $${valorFinal}</p>`;
+    
     formTurno.reset();
-
+    actualizarHorariosDisponibles();
     renderTurnos();
   });
 
