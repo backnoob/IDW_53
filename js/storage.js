@@ -32,11 +32,18 @@ export function eliminarMedico(id) {
 
 // --- ESPECIALIDADES ---
 export function getEspecialidades() {
-  return JSON.parse(localStorage.getItem("especialidades")) || [];
+  const guardadas = JSON.parse(localStorage.getItem("especialidades"));
+  if (guardadas && guardadas.length > 0) return guardadas;
+
+  // si no hay nada, usa las del archivo por defecto
+  import("./data.js").then(module => {
+    localStorage.setItem("especialidades", JSON.stringify(module.especialidadesDefault));
+  });
+  return [];
 }
 
-export function saveEspecialidades(lista) {
-  localStorage.setItem("especialidades", JSON.stringify(lista));
+export function saveEspecialidades(especialidades) {
+  localStorage.setItem("especialidades", JSON.stringify(especialidades));
 }
 
 // --- OBRAS SOCIALES ---
@@ -54,5 +61,10 @@ export function getTurnos() {
 }
 
 export function saveTurnos(lista) {
-  localStorage.setItem("turnos", JSON.stringify(lista));
+  const turnosConPrecio = lista.map(t => ({
+    ...t,
+    precio: t.precio ?? 0 // si no tiene precio, le asigna 0 por defecto
+  }));
+
+  localStorage.setItem("turnos", JSON.stringify(turnosConPrecio));
 }

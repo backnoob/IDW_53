@@ -35,6 +35,25 @@
     </div>
   </div>
 
+  <!-- 🆕 Modal EDITAR especialidad -->
+<div class="modal fade" id="modalEditarEspecialidad" tabindex="-1" aria-labelledby="modalEditarEspecialidadLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarEspecialidadLabel">Editar Especialidad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editarEspecialidadId">
+        <input type="text" id="editarNombreEspecialidad" class="form-control" placeholder="Nuevo nombre de la especialidad">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" id="guardarCambiosEspecialidadBtn" class="btn btn-primary rounded-pill">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+  
   <div class="modal fade" id="modalAltaEspecialidad" tabindex="-1" aria-labelledby="modalAltaEspecialidadLabel">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content rounded-4">

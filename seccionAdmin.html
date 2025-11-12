@@ -61,6 +61,9 @@
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse show" id="navbarNavDropdown">
                     <ul class="navbar-nav d-flex flex-wrap gap-3 justify-content-center w-100 py-3">
+                         <li class="nav-item">
+                        <a class="nav-link btn btn-outline-secondary px-4 py-2 rounded-pill" href="usuarios.html">Usuarios</a>
+                        </li>
                         <li class="nav-item">
                         <a class="nav-link btn btn-outline-secondary px-4 py-2 rounded-pill" href="medico.html">Médicos</a>
                         </li>
@@ -84,13 +87,20 @@
                 </div>
                 </nav>
 
-                <script>
-                    document.getElementById('logoutBtn').addEventListener('click', () => {
-                    sessionStorage.removeItem('accessToken');
-                    window.location.href = 'inicio.html';
-                    });
-                </script>
-            </section>
+           <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        sessionStorage.clear(); // limpia todo: token, datos del usuario, etc.
+        window.location.href = "inicio.html";
+      });
+    }
+  });
+</script>
+
 
 
 
@@ -98,6 +108,9 @@
     <script type="module" src="./js/medico.js" defer></script>
     <script type="module" src="./js/auth.js" defer></script>
     <script type="module" src="./js/navbar.js" defer></script>
+      <script type="module" src="./js/usuarios.js" defer></script>
+      <script type="module" src="./js/especialidades.js" defer></script>
+      
 
 </body>
 

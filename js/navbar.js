@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('logoutBtnMobile').addEventListener('click', logout);
   }
 
-  // Marcar sección activa de forma más robusta
   const currentPath = window.location.pathname.split('/').pop().toLowerCase();
 
   document.querySelectorAll('.nav__menu a, .navbar-nav a').forEach(link => {
@@ -43,4 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
       link.classList.remove('active');
     }
   });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const role = sessionStorage.getItem("role");
+
+  // Si el usuario es admin, ocultar el link de Turnos
+  if (role && role.toLowerCase() === "admin") {
+    const turnosLink = document.querySelector('a[href*="turnos"]');
+    if (turnosLink) {
+      turnosLink.style.display = "none";
+    }
+  }
 });

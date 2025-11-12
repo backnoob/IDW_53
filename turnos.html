@@ -7,48 +7,31 @@
   <title>Turnos Médicos - IDW S.A.</title>
   <link rel="stylesheet" href="css/estilos.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-              <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <nav id="navbar" class="navbar navbar-expand-lg fixed-top py-3">
-            <div class="container">
-
-                <a class="navbar-brand" href="inicio.html">
-                    <img src="img/logo2.png" alt="Logo" width="180">
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="inicio.html">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="institucional.html">Institucional</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contacto.html">Contacto</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="turnos.html">Turnos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-primary ms-lg-3" href="login.html">Login</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-    </header>
+  <header>
+    <nav id="navbar" class="navbar navbar-expand-lg fixed-top py-3">
+      <div class="container">
+        <a class="navbar-brand" href="inicio.html">
+          <img src="img/logo2.png" alt="Logo" width="180">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="inicio.html">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="institucional.html">Institucional</a></li>
+            <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+            <li class="nav-item"><a class="nav-link active" href="turnos.html">Turnos</a></li>
+            <li class="nav-item"><a class="btn btn-primary ms-lg-3" href="login.html">Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
 
   <main class="container py-5">
     <h2 class="mb-4">Turnos Médicos Disponibles</h2>
@@ -88,6 +71,19 @@
             <input type="hidden" id="idTurno">
 
             <div class="mb-3">
+              <label class="form-label">Médico</label>
+              <input id="medicoSeleccionado" class="form-control" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Especialidad</label>
+<input id="especialidadSeleccionada" class="form-control" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Precio de consulta</label>
+              <input id="precioConsulta" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
               <input id="nombre" type="text" class="form-control" required>
             </div>
@@ -117,16 +113,11 @@
     </div>
   </main>
 
-  <!-- Bootstrap + JS del módulo -->
+  <!-- Bootstrap + JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="/js/storage.js"></script>
   <script type="module" src="/js/turnosUsuario.js"></script>
-  <script type="module" src="/js/turnosAdmin.js"></script>
   <script type="module" src="/js/navbar.js"></script>
-   <script type="module" src="/js/auth.js"></script>
-  
-
-
+  <script type="module" src="/js/auth.js"></script>
 </body>
-
 </html>

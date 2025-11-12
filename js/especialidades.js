@@ -1,81 +1,57 @@
-import { getEspecialidades, saveEspecialidades } from './storage.js';
+document.addEventListener('DOMContentLoaded', () => {
+  const token = sessionStorage.getItem('accessToken');
 
-let editandoId = null;
+  const desktopMenu = document.querySelector('.nav__menu');
+  const mobileMenu = document.querySelector('.navbar-nav');
 
-const tabla = document.getElementById("tablaEspecialidades");
-const modal = new bootstrap.Modal(document.getElementById("modalAltaEspecialidad"));
-const nombreInput = document.getElementById("nombreEspecialidad");
-const guardarBtn = document.getElementById("guardarEspecialidadBtn");
+  // Cambiar Login a Sección Admin si hay token
+  const desktopLoginLink = desktopMenu.querySelector('a[href="login.html"]');
+  const mobileLoginLink = mobileMenu.querySelector('a[href="login.html"]');
 
-function renderEspecialidades() {
-  const lista = getEspecialidades();
-  tabla.querySelector("tbody").innerHTML = "";
+  if (token) {
+    if (desktopLoginLink) desktopLoginLink.outerHTML = `<a href="seccionAdmin.html">Sección Admin</a>`;
+    if (mobileLoginLink) mobileLoginLink.outerHTML = `<a class="nav-link" href="seccionAdmin.html">Sección Admin</a>`;
 
-  lista.forEach(e => {
-    tabla.querySelector("tbody").innerHTML += `
-      <tr>
-        <td>${e.id}</td>
-        <td>${e.nombre}</td>
-        <td>
-          <button class="btn btn-primary btn-sm" onclick="editarEspecialidad(${e.id})">Editar</button>
-          <button class="btn btn-danger btn-sm" onclick="eliminarEspecialidad(${e.id})">Eliminar</button>
-        </td>
-      </tr>
-    `;
+    // Botones Cerrar sesión
+    const logoutDesktop = document.createElement('li');
+    logoutDesktop.classList.add('nav__menu__hijo');
+    logoutDesktop.innerHTML = `<a href="#" id="logoutBtn">Cerrar sesión</a>`;
+    desktopMenu.appendChild(logoutDesktop);
+
+    const logoutMobile = document.createElement('li');
+    logoutMobile.classList.add('nav-item');
+    logoutMobile.innerHTML = `<a class="nav-link" href="#" id="logoutBtnMobile">Cerrar sesión</a>`;
+    mobileMenu.appendChild(logoutMobile);
+
+    const logout = () => {
+      sessionStorage.removeItem('access Token');
+      window.location.href = 'inicio.html';
+    };
+
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('logoutBtnMobile').addEventListener('click', logout);
+  }
+
+  const currentPath = window.location.pathname.split('/').pop().toLowerCase();
+
+  document.querySelectorAll('.nav__menu a, .navbar-nav a').forEach(link => {
+    const linkPath = link.getAttribute('href').split('/').pop().toLowerCase();
+    if (linkPath === currentPath || (currentPath === '' && linkPath === 'inicio.html')) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
   });
-}
-
-document.getElementById("btnAltaEspecialidad").addEventListener("click", () => {
-  editandoId = null;
-  nombreInput.value = "";
-  document.getElementById("modalAltaEspecialidadLabel").textContent = "Nueva Especialidad";
-  modal.show();
 });
 
-guardarBtn.addEventListener("click", () => {
-  const nombre = nombreInput.value.trim();
-  if (!nombre) return alert("Ingresa un nombre");
+document.addEventListener("DOMContentLoaded", () => {
+  const role = sessionStorage.getItem("role");
 
-  const lista = getEspecialidades();
-  if (editandoId) {
-    const index = lista.findIndex(e => e.id === editandoId);
-    lista[index].nombre = nombre;
-  } else {
-    const nuevoId = lista.length ? lista[lista.length - 1].id + 1 : 1;
-    lista.push({ id: nuevoId, nombre });
+  // Si el usuario es admin, ocultar el link de Turnos
+  if (role && role.toLowerCase() === "admin") {
+    const turnosLink = document.querySelector('a[href*="turnos"]');
+    if (turnosLink) {
+      turnosLink.style.display = "none";
+    }
   }
-
-  saveEspecialidades(lista);
-  renderEspecialidades();
-  modal.hide();
 });
-
-
-let idEspecialidadAEliminar = null;
-window.eliminarEspecialidad = (id) => {
-  idEspecialidadAEliminar = id;
-  const lista = getEspecialidades();
-  const especialidad = lista.find(e => e.id === id);
-  const texto = especialidad
-    ? `¿Eliminar la especialidad <strong>${especialidad.nombre}</strong>?`
-    : `¿Eliminar esta especialidad?`;
-
-  document.getElementById("textoEliminarEspecialidad").innerHTML = texto;
-
-  const modalEliminar = new bootstrap.Modal(document.getElementById("modalEliminarEspecialidad"));
-  modalEliminar.show();
-};
-
-document.getElementById("btnEliminarEspecialidadConfirmado").addEventListener("click", () => {
-  if (idEspecialidadAEliminar !== null) {
-    const lista = getEspecialidades().filter(e => e.id !== idEspecialidadAEliminar);
-    saveEspecialidades(lista);
-    renderEspecialidades();
-    idEspecialidadAEliminar = null;
-  }
-
-  bootstrap.Modal.getInstance(document.getElementById("modalEliminarEspecialidad")).hide();
-});
-
-// Inicializar tabla
-renderEspecialidades();

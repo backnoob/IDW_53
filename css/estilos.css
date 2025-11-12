@@ -17,15 +17,20 @@ body {
 }
 
 main {
-  padding-top: 100px; /* Ajustá según el alto de tu navbar */
+  padding-top: 10px; /* Ajustá según el alto de tu navbar */
   font-family: 'Montserrat', sans-serif;
    flex: 1; /* ocupa el espacio restante */
-  padding-top: 100px; /* para que no quede debajo del navbar */
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-
+.main2 {
+  padding-top: 100px; /* Ajustá según el alto de tu navbar */
+  font-family: 'Montserrat', sans-serif;
+   flex: 1; /* ocupa el espacio restante */
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 /* Fuente Montserrat */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
 
@@ -46,10 +51,14 @@ body {
   transform: scale(1.05);
 }
 
-/* Navbar background y sombra */
 .navbar {
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050; /* Añadir z-index para asegurar que está arriba */
 }
 
 /* Logo ajustado */
@@ -76,22 +85,29 @@ body {
   padding: 1rem;
   border-radius: 8px;
 }
+@media (max-width: 768px) {
+    /* En dispositivos móviles ajustamos los valores */
+    body {
+        padding-top: 80px; /* Reducimos el espacio superior */
+    }
 
+    .hero {
+        padding-top: 100px; /* Ajustamos la parte superior del hero */
+    }
 
-.hero{
-    height: 85vh;
-    background-image: url("/img/pexels-pavel-danilyuk-7108318.jpg");
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-size: cover;
+    /* Navbar en responsive */
+    .navbar-toggler {
+        margin-right: 0;
+    }
+
+    /* Ajustes para evitar que los elementos se apilen debajo */
+    main {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 
-main{
-    max-width: 100%;
-    margin: 40px auto 0 auto;
-  
-}
 
 section {
     background: #fff;
@@ -107,30 +123,6 @@ section h2{
 
 }
 
-.ObraSocial ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.ObraSocial li {
-    background: #3b6e69;
-    border: 1px solid #404040;
-    border-radius: 5px;
-    padding: 6px 12px;
-    color: #fff;
-    font-weight: 500;
-}
-
-.ObraSocial li a {
-    color: inherit;         
-    text-decoration: none;    
-    display: inline-block;   
-
-}
 .catalogo{
     margin: 0 auto;
     padding: 2rem;
@@ -556,3 +548,44 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
   color: #0d6efd; /* azul Bootstrap */
 }
 
+.ObraSocial ul {
+  padding: 0;
+  list-style: none;
+}
+
+.ObraSocial li a {
+  font-size: 1.1rem;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.ObraSocial li a:hover {
+  color: #e0e0e0;
+  text-decoration: underline;
+}
+
+
+.ObraSocial ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ObraSocial li {
+    background: #3b6e69;
+    border: 1px solid #404040;
+    border-radius: 5px;
+    padding: 6px 12px;
+    color: #fff ;
+    font-weight: 500;
+}
+
+.ObraSocial li a {
+    color: inherit;         
+    text-decoration: none;    
+    display: inline-block;   
+
+}
