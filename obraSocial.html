@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Obras Sociales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+                    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="seccionAdmin.html" class="btn btn-md btn-primary shadow-sm">
+            <i class="bi bi-arrow-left-circle"></i> Volver </a>
+            <h1 class="h3 mb-0">Listado de Obras Sociales</h1>
+            <button id="btnAltaObraSocial" class="btn btn-success rounded-pill">
+                + Agregar Obra Social
+            </button>
+        </div>
+
+        <div class="table-responsive mt-4">
+            <table id="tablaObrasSociales" class="table table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Descuento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Alta/Edición Obra Social -->
+    <div class="modal fade" id="modalAltaObraSocial" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAltaObraSocialLabel">Alta de Obra Social</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="altaObraSocialForm">
+                        <div class="mb-3">
+                            <label for="nombreObraSocial" class="form-label">Nombre</label>
+                            <input type="text" id="nombreObraSocial" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcionObraSocial" class="form-label">Descripción</label>
+                            <textarea id="descripcionObraSocial" class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descuentoObraSocial" class="form-label">Descuento (%)</label>
+                            <input type="number" id="descuentoObraSocial" class="form-control" min="0" max="100">
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="guardarObraSocialBtn">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./js/obraSocial.js" defer></script>
+        <script type="module" src="./js/navbar.js" defer></script>
+
+
+    <div class="modal fade" id="modalEliminarObraSocial" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">¿Eliminar obra social?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="textoEliminarObraSocial" class="mb-0">¿Estás seguro de que querés eliminar esta obra social?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnEliminarObraSocialConfirmado">Eliminar</button>
+                </div>
+                </div>
+            </div>
+    </div>
+
+
+</body>
+
+</html>
