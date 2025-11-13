@@ -2,6 +2,7 @@ import { medicos, especialidades, obrasSociales } from './data.js';
 
 // --- Inicialización de localStorage con los datos del archivo data.js ---
 export function inicializarLocalStorage() {
+  // Verificamos si ya existen los datos en el localStorage
   if (!localStorage.getItem("medicos")) {
     localStorage.setItem("medicos", JSON.stringify(medicos));
   }
@@ -12,7 +13,7 @@ export function inicializarLocalStorage() {
     localStorage.setItem("obrasSociales", JSON.stringify(obrasSociales));
   }
   if (!localStorage.getItem("turnos")) {
-    localStorage.setItem("turnos", JSON.stringify([])); // arranca vacío
+    localStorage.setItem("turnos", JSON.stringify([])); // Arranca vacío
   }
 }
 
@@ -30,22 +31,6 @@ export function eliminarMedico(id) {
   saveMedicos(medicos);
 }
 
-// --- ESPECIALIDADES ---
-export function getEspecialidades() {
-  const guardadas = JSON.parse(localStorage.getItem("especialidades"));
-  if (guardadas && guardadas.length > 0) return guardadas;
-
-  // si no hay nada, usa las del archivo por defecto
-  import("./data.js").then(module => {
-    localStorage.setItem("especialidades", JSON.stringify(module.especialidadesDefault));
-  });
-  return [];
-}
-
-export function saveEspecialidades(especialidades) {
-  localStorage.setItem("especialidades", JSON.stringify(especialidades));
-}
-
 // --- OBRAS SOCIALES ---
 export function getObrasSociales() {
   return JSON.parse(localStorage.getItem("obrasSociales")) || [];
@@ -53,6 +38,17 @@ export function getObrasSociales() {
 
 export function saveObrasSociales(lista) {
   localStorage.setItem("obrasSociales", JSON.stringify(lista));
+}
+
+// --- ESPECIALIDADES ---
+export const getEspecialidades = () => {
+  const especialidades = JSON.parse(localStorage.getItem('especialidades')) || [];
+  return especialidades;
+};
+
+// Guardar especialidades en localStorage
+export function saveEspecialidades(especialidades) {
+  localStorage.setItem('especialidades', JSON.stringify(especialidades));
 }
 
 // --- TURNOS ---
@@ -63,7 +59,7 @@ export function getTurnos() {
 export function saveTurnos(lista) {
   const turnosConPrecio = lista.map(t => ({
     ...t,
-    precio: t.precio ?? 0 // si no tiene precio, le asigna 0 por defecto
+    precio: t.precio ?? 0 // Si no tiene precio, le asigna 0 por defecto
   }));
 
   localStorage.setItem("turnos", JSON.stringify(turnosConPrecio));

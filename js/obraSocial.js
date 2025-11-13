@@ -115,3 +115,4 @@ tablaObras.addEventListener('click', (e) => {
 
 // Inicializar tabla
 renderObrasSociales();
+

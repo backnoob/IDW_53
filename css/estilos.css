@@ -504,7 +504,7 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
     }
 
     .button-login {
-      width: 100%;
+      width: 322px;
       padding: 10px;
       background-color: #007bff;
       color: white;
@@ -588,4 +588,50 @@ box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2
     text-decoration: none;    
     display: inline-block;   
 
+}
+
+.button-volver {
+  display: inline-block; 
+  padding: 10px 20px; 
+  background-color: transparent; 
+  color: #28a745; 
+  border: 2px solid #28a745; 
+  font-size: 16px; 
+  text-decoration: none;
+  cursor: pointer; 
+  text-align: center; 
+  transition: background-color 0.3s, color 0.3s, transform 0.2s; 
+  margin-top: 15px; 
+  width: auto; 
+}
+
+.button-volver:hover {
+  background-color: #28a745;
+  color: white; 
+  transform: translateY(-2px); 
+}
+
+
+.button-volver:active {
+  transform: translateY(2px); 
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 300px) {
+  .login-container {
+    padding: 15px; /* Reduce padding en pantallas pequeñas */
+    width: 90%; /* Deja que el contenedor se expanda un poco más en pantallas pequeñas */
+  }
+
+  .button-login {
+    font-size: 1rem; /* Reduce el tamaño del texto */
+  }
+
+  .button-volver {
+    font-size: 1rem; /* Reduce el tamaño del texto */
+  }
+
+  h2 {
+    font-size: 1.2rem; /* Ajusta el tamaño del título en pantallas pequeñas */
+  }
 }

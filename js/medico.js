@@ -89,19 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('altaObrasSociales').selectedOptions
     ).map(opt => parseInt(opt.value));
 
-    const datosMedico = {
-      matricula: parseInt(document.getElementById('altaMatricula').value) || 0,
-      apellido: document.getElementById('altaApellido').value.trim(),
-      nombre: document.getElementById('altaNombre').value.trim(),
-      especialidadId: parseInt(document.getElementById('altaEspecialidad').value) || 0,
-      descripcion: document.getElementById('altaDescripcion').value.trim(),
-      obrasSociales: obrasSocialesSeleccionadas,
-      valorConsulta: parseFloat(document.getElementById('altaValorConsulta').value) || 0,
-      email: document.getElementById('altaEmail').value.trim(),
-      foto: editandoId
-        ? getMedicos().find(m => m.id === editandoId)?.foto || "img/default-doctor.jpg"
-        : "img/default-doctor.jpg"
-    };
+  const datosMedico = {
+  matricula: parseInt(document.getElementById('altaMatricula').value) || 0,
+  apellido: document.getElementById('altaApellido').value.trim(),
+  nombre: document.getElementById('altaNombre').value.trim(),
+  especialidadId: parseInt(document.getElementById('altaEspecialidad').value) || 0,  // Asegúrate que este valor se esté asignando correctamente
+  descripcion: document.getElementById('altaDescripcion').value.trim(),
+  obrasSociales: obrasSocialesSeleccionadas,
+  valorConsulta: parseFloat(document.getElementById('altaValorConsulta').value) || 0,
+  email: document.getElementById('altaEmail').value.trim(),
+  foto: editandoId
+    ? getMedicos().find(m => m.id === editandoId)?.foto || "img/default-doctor.jpg"
+    : "img/default-doctor.jpg"
+};
+
+console.log('especialidadId asignada:', datosMedico.especialidadId);
 
     const archivoFoto = document.getElementById('altaFoto').files[0];
     if (archivoFoto) {
@@ -139,10 +141,19 @@ function guardarMedico(medicos, datosMedico, formAlta) {
 
 // === ABRIR MODAL DE EDICIÓN ===
 export function abrirModalEdicion(id) {
-  const medicos = getMedicos();
-  const medico = medicos.find(m => m.id === id);
-  if (!medico) return;
+  const medicos = getMedicos();  // Obtener la lista de médicos
+  const medico = medicos.find(m => m.id === id);  // Buscar el médico por su ID
 
+  // Si no se encuentra el médico, terminar la función
+  if (!medico) {
+    console.log(`No se encontró el médico con ID ${id}`);
+    return;
+  }
+
+  // Mostrar los datos del médico en la consola para depurar
+  console.log("Médico a editar:", medico);
+
+  // Procedemos con la carga de los datos en el formulario para la edición
   editandoId = id;
   cargarObrasSociales();
   cargarEspecialidadesEnSelect();
@@ -170,9 +181,7 @@ export function abrirModalEdicion(id) {
   modalAlta.show();
 }
 
-window.abrirModalEdicion = abrirModalEdicion;
 
-// === FUNCIONES AUXILIARES ===
 
 // Cargar obras sociales en el select del modal
 function cargarObrasSociales() {

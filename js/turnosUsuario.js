@@ -6,18 +6,17 @@ const formReserva = document.getElementById("formReserva");
 const obraSocialSelect = document.getElementById("obraSocial");
 const descuentoInfo = document.getElementById("descuentoInfo");
 
-// Carga inicial de médicos y turnos
+// Carga inicial
 document.addEventListener("DOMContentLoaded", () => {
-  cargarMedicos();         // Cargar médicos en el select
-  cargarObrasSociales();   // Cargar obras sociales
-  renderTurnos();          // Renderizar turnos disponibles
+  cargarMedicos();
+  cargarObrasSociales();
+  renderTurnos();
 });
 
 // --- Cargar médicos ---
 function cargarMedicos() {
   const medicos = getMedicos();
-  filtroMedico.innerHTML = `<option value="">Seleccione</option>`; // Establecer "Seleccione" como opción por defecto
-
+  filtroMedico.innerHTML = `<option value="">Seleccione</option>`; // Opción predeterminada
   medicos.forEach(m => {
     const opt = document.createElement("option");
     opt.value = m.id;
@@ -25,18 +24,13 @@ function cargarMedicos() {
     filtroMedico.appendChild(opt);
   });
 
-  // Mantener la opción "Seleccione" seleccionada por defecto
-  filtroMedico.value = ""; // Asegurarse de que "Seleccione" esté seleccionado inicialmente
-
-  filtroMedico.addEventListener("change", renderTurnos);
+  filtroMedico.addEventListener("change", renderTurnos); // Cuando se cambia, actualizamos los turnos
 }
 
 // --- Cargar obras sociales ---
 function cargarObrasSociales() {
   const obras = getObrasSociales();
-  obraSocialSelect.innerHTML = `<option value="">Sin obra social</option>`; // Opción por defecto
-
-  // Agregar obras sociales al select
+  obraSocialSelect.innerHTML = `<option value="">Sin obra social</option>`;
   obras.forEach(o => {
     const opt = document.createElement("option");
     opt.value = o.nombre;
@@ -45,90 +39,86 @@ function cargarObrasSociales() {
   });
 }
 
-// --- Renderizar turnos disponibles ---
+// --- Renderizar turnos ---
 export function renderTurnos() {
-  const medicoId = Number(filtroMedico.value); // Obtener el id del médico seleccionado
+  const medicoId = Number(filtroMedico.value);
   const tbody = tablaTurnos.querySelector("tbody");
-  tbody.innerHTML = ""; // Limpiar la tabla antes de renderizar
+  tbody.innerHTML = "";
 
-  const turnos = getTurnos();
-
-  // Si no se ha seleccionado un médico (valor vacío en el select), no mostrar turnos
   if (!medicoId) {
-    const fila = document.createElement("tr");
-    fila.innerHTML = `<td colspan="4" class="text-center">Por favor, seleccione un médico.</td>`;
-    tbody.appendChild(fila);
-    return; // Salir de la función si no hay médico seleccionado
-  }
-
-  // Filtrar los turnos por el médico seleccionado
-  const turnosFiltrados = turnos.filter(t => t.medicoId === medicoId);
-
-  // Si no hay turnos disponibles para el médico seleccionado, mostrar mensaje
-  if (turnosFiltrados.length === 0) {
-    const fila = document.createElement("tr");
-    fila.innerHTML = `<td colspan="4" class="text-center">No hay turnos disponibles para este médico.</td>`;
-    tbody.appendChild(fila);
+    // Si no hay médico seleccionado, no mostramos nada
+    tbody.innerHTML = "<tr><td colspan='4'>Por favor, seleccione un médico para ver los turnos.</td></tr>";
     return;
   }
 
-  // Renderizar los turnos filtrados
-  turnosFiltrados.forEach(turno => {
-    const fila = document.createElement("tr");
-    fila.innerHTML = `
-      <td>${turno.fecha}</td>
-      <td>${turno.hora}</td>
-      <td>${turno.estado || "disponible"}</td>
-      <td>
-        ${turno.estado === "reservado"
+  const turnos = getTurnos();
+  const turnosFiltrados = turnos.filter(t => t.medicoId === medicoId);
+
+  if (turnosFiltrados.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='4'>No hay turnos disponibles para este médico.</td></tr>";
+  } else {
+    turnosFiltrados.forEach(turno => {
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${turno.fecha}</td>
+        <td>${turno.hora}</td>
+        <td>${turno.estado || "disponible"}</td>
+        <td>
+          ${turno.estado === "reservado"
           ? `<span class="text-danger">No disponible</span>`
           : `<button class="btn btn-success btn-sm" data-id="${turno.id}" data-bs-toggle="modal" data-bs-target="#modalReservar">Reservar</button>`
         }
-      </td>
-    `;
-    tbody.appendChild(fila);
-  });
+        </td>
+      `;
 
-  // Agregar evento de "Reservar" a cada botón de reserva
-  tbody.querySelectorAll("button[data-id]").forEach(btn => {
-    btn.addEventListener("click", () => abrirModalReserva(btn.dataset.id)); // Abrir modal de reserva
-  });
+      tbody.appendChild(fila);
+    });
+
+    tbody.querySelectorAll("button[data-id]").forEach(btn => {
+      btn.addEventListener("click", () => abrirModalReserva(btn.dataset.id));
+    });
+  }
 }
 
-
-// --- Abrir modal de reserva ---
 function abrirModalReserva(idTurno) {
-  const turno = getTurnos().find(t => t.id === Number(idTurno));
+  const id = Number(idTurno);
+  const turno = getTurnos().find(t => t.id === id);
   if (!turno) return;
 
-  document.getElementById("idTurno").value = turno.id; // Establecer el id del turno
+  document.getElementById("idTurno").value = id;
 
-  // Obtener datos del médico y especialidad
   const medico = getMedicos().find(m => m.id === turno.medicoId);
-  const especialidad = getEspecialidades().find(e => e.id === medico.especialidadId);
-  
-  // Mostrar datos del médico y especialidad en el formulario
-  document.getElementById("medicoSeleccionado").value = `${medico.nombre} ${medico.apellido}`;
-  document.getElementById("especialidadSeleccionada").value = especialidad ? especialidad.nombre : "Sin especialidad";
-  document.getElementById("precioConsulta").value = `$${medico.valorConsulta.toFixed(2)}`;
+  const especialidades = getEspecialidades();
+  const especialidadNombre = especialidades.find(e => e.id === medico.especialidadId)?.nombre || "Sin especialidad";
 
-  // Limpiar los campos del paciente
-  document.getElementById("nombre").value = "";
-  document.getElementById("apellido").value = "";
-  document.getElementById("telefono").value = "";
-  document.getElementById("email").value = "";
-  obraSocialSelect.value = "";  // Resetear la obra social
-  descuentoInfo.textContent = "";  // Resetear el descuento
+  const inputMedico = document.getElementById("medicoSeleccionado");
+  const inputEspecialidad = document.getElementById("especialidadSeleccionada");
+  const inputPrecio = document.getElementById("precioConsulta");
+  const inputNombre = document.getElementById("nombre");
+  const inputApellido = document.getElementById("apellido");
+  const inputTelefono = document.getElementById("telefono");
+  const inputEmail = document.getElementById("email");
 
-  // Calcular descuento cuando se elige una obra social
+  if (inputMedico) inputMedico.value = `${medico.nombre} ${medico.apellido}`;
+  if (inputEspecialidad) inputEspecialidad.value = especialidadNombre;
+  if (inputPrecio) inputPrecio.value = `$${medico.valorConsulta.toFixed(2)}`;
+
+  inputNombre.value = "";
+  inputApellido.value = "";
+  inputTelefono.value = "";
+  inputEmail.value = "";
+  obraSocialSelect.value = "";
+  descuentoInfo.textContent = "";
+
   obraSocialSelect.onchange = () => {
-    const obra = obraSocialSelect.value;
+    const obraNombre = obraSocialSelect.value;
+    const obra = getObrasSociales().find(o => o.nombre === obraNombre);
     const precioBase = medico.valorConsulta;
 
     if (obra) {
-      const descuento = precioBase * 0.1; // Descuento del 10%
+      const descuento = precioBase * (obra.descuento / 100); // Descuento específico de la obra social
       const precioFinal = precioBase - descuento;
-      descuentoInfo.textContent = `Descuento aplicado por ${obra}: 10% → precio final $${precioFinal.toFixed(2)}`;
+      descuentoInfo.textContent = `Descuento aplicado por ${obraNombre}: (${obra.descuento}%) → precio final $${precioFinal.toFixed(2)}`;
     } else {
       descuentoInfo.textContent = "";
     }
@@ -140,57 +130,54 @@ formReserva.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const idTurno = Number(document.getElementById("idTurno").value);
-  const turno = getTurnos().find(t => t.id === idTurno);
+  const turnos = getTurnos();
+  const turno = turnos.find(t => t.id === idTurno);
 
   if (!turno) {
     alert("Error: el turno seleccionado no se encontró.");
     return;
   }
 
-  // Obtener datos del médico y especialidad
   const medico = getMedicos().find(m => m.id === turno.medicoId);
   const especialidad = getEspecialidades().find(e => e.id === medico.especialidadId)?.nombre || "Sin especialidad";
 
-  // Obtener datos del paciente
   const nombre = document.getElementById("nombre").value.trim();
   const apellido = document.getElementById("apellido").value.trim();
   const telefono = document.getElementById("telefono").value.trim();
   const email = document.getElementById("email").value.trim();
   const obra = document.getElementById("obraSocial").value;
 
-  // Calcular precio final con descuento si es que tiene obra social
   const precioBase = Number(medico.valorConsulta) || 0;
-  const descuento = obra ? (precioBase * 0.1) : 0;
+
+  // Obtener el descuento de la obra social seleccionada
+  const obraSeleccionada = getObrasSociales().find(o => o.nombre === obra);
+  const porcentajeDescuento = obraSeleccionada ? obraSeleccionada.descuento : 0;
+  const descuento = (precioBase * porcentajeDescuento) / 100;
   const precioFinal = precioBase - descuento;
 
-  // Actualizar estado del turno y datos del paciente
   turno.estado = "reservado";
   turno.paciente = { nombre, apellido, telefono, email };
   turno.obraSocial = obra || "Sin obra social";
   turno.precio = precioFinal;
 
-  // Guardar los cambios en los turnos
-  saveTurnos(getTurnos());
-
-  // Renderizar los turnos nuevamente
+  saveTurnos(turnos);
   renderTurnos();
 
-  // Cerrar el modal y resetear el formulario
   const modal = bootstrap.Modal.getInstance(document.getElementById("modalReservar"));
   if (modal) modal.hide();
   formReserva.reset();
   descuentoInfo.textContent = "";
 
-  // Mostrar los detalles del turno reservado
+  //Detalle completo del turno reservado
   const detalle = `
-    TURNO RESERVADO CON ÉXITO
-    Médico: ${medico.nombre} ${medico.apellido}
-    Especialidad: ${especialidad}
-    Fecha y Hora: ${turno.fecha} - ${turno.hora}Hs.
-    Obra social: ${obra || "Sin obra social"}
-    Precio base: $${precioBase.toFixed(2)}
-    Descuento: 10% (-$${descuento.toFixed(2)})
-    Precio final: $${precioFinal.toFixed(2)}
+TURNO RESERVADO CON ÉXITO
+Médico: ${medico.nombre} ${medico.apellido}
+Especialidad: ${especialidad}
+Fecha y Hora: ${turno.fecha} - ${turno.hora}Hs.
+Obra social: ${obra || "Sin obra social"}
+Precio base: $${precioBase.toFixed(2)}
+Descuento: ${porcentajeDescuento}% (-$${descuento.toFixed(2)})
+Precio final: $${precioFinal.toFixed(2)}
   `;
 
   alert(detalle);
