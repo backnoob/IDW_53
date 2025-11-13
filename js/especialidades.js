@@ -1,20 +1,22 @@
 import { getEspecialidades, saveEspecialidades } from './storage.js';
 
 let editandoId = null;
+let idEspecialidadAEliminar = null;
+
 
 const tabla = document.getElementById("tablaEspecialidades");
 const modal = new bootstrap.Modal(document.getElementById("modalAltaEspecialidad"));
 const nombreInput = document.getElementById("nombreEspecialidad");
 const guardarBtn = document.getElementById("guardarEspecialidadBtn");
 document.addEventListener('DOMContentLoaded', () => {
-  renderEspecialidades();  // Llamada a renderizar especialidades al cargar el DOM
+  renderEspecialidades();  
 });
 
 function renderEspecialidades() {
-  const lista = getEspecialidades();  // Obtener las especialidades desde localStorage
-  const tbody = document.getElementById("tbodyEspecialidades");  // Obtener el cuerpo de la tabla
+  const lista = getEspecialidades(); 
+  const tbody = document.getElementById("tbodyEspecialidades"); 
 
-  tbody.innerHTML = "";  // Limpiar el contenido de la tabla antes de agregar nuevas filas
+  tbody.innerHTML = "";  
 
   lista.forEach(e => {
     tbody.innerHTML += `
@@ -30,54 +32,72 @@ function renderEspecialidades() {
   });
 }
 
-
-
-// Mostrar el modal para agregar una nueva especialidad
 document.getElementById("btnAltaEspecialidad").addEventListener("click", () => {
   editandoId = null;
-  nombreInput.value = "";  // Limpiar el campo de entrada
+  nombreInput.value = "";  
   document.getElementById("modalAltaEspecialidadLabel").textContent = "Nueva Especialidad";
-  modal.show();  // Mostrar el modal
+  modal.show(); 
 });
 
 // Guardar especialidad
 guardarBtn.addEventListener("click", () => {
   const nombre = nombreInput.value.trim();
-  if (!nombre) return alert("Ingresa un nombre");  // Verificar si el nombre no está vacío
+  if (!nombre) return alert("Ingresa un nombre"); 
 
-  const lista = getEspecialidades();  // Obtener la lista de especialidades
+  const lista = getEspecialidades();
   if (editandoId) {
-    // Editar la especialidad existente
+
     const index = lista.findIndex(e => e.id === editandoId);
     lista[index].nombre = nombre;
   } else {
-    // Crear una nueva especialidad
+  
     const nuevoId = lista.length ? lista[lista.length - 1].id + 1 : 1;
     lista.push({ id: nuevoId, nombre });
   }
 
   saveEspecialidades(lista);  // Guardar las especialidades en localStorage
-  renderEspecialidades();  // Volver a renderizar la tabla
-  modal.hide();  // Cerrar el modal
+  renderEspecialidades();  
+  modal.hide();  
 });
 
 // Editar especialidad
 window.editarEspecialidad = (id) => {
-  const lista = getEspecialidades();  // Obtener las especialidades
-  const e = lista.find(x => x.id === id);  // Buscar la especialidad por ID
-  editandoId = id;  // Establecer la especialidad en edición
-  nombreInput.value = e.nombre;  // Cargar el nombre de la especialidad en el input
-  document.getElementById("modalAltaEspecialidadLabel").textContent = "Editar Especialidad";  // Cambiar el título del modal
-  modal.show();  // Mostrar el modal
+  const lista = getEspecialidades();  
+  const e = lista.find(x => x.id === id);  
+  editandoId = id;  
+  nombreInput.value = e.nombre;  
+  document.getElementById("modalAltaEspecialidadLabel").textContent = "Editar Especialidad";
+  modal.show(); 
 };
 
 // Eliminar especialidad
 window.eliminarEspecialidad = (id) => {
-  if (!confirm("¿Eliminar esta especialidad?")) return;  // Confirmar antes de eliminar
-  const lista = getEspecialidades().filter(e => e.id !== id);  // Filtrar la especialidad a eliminar
-  saveEspecialidades(lista);  // Guardar los cambios en localStorage
-  renderEspecialidades();  // Volver a renderizar la tabla
+  const lista = getEspecialidades();
+  const esp = lista.find(e => e.id === id);
+  idEspecialidadAEliminar = id;
+  const texto = esp
+    ? `¿Eliminar la especialidad <strong>${esp.nombre}</strong>?`
+    : `¿Eliminar esta especialidad?`;
+
+  document.getElementById("textoEliminarEspecialidad").innerHTML = texto;
+
+  const modalEliminar = new bootstrap.Modal(document.getElementById("modalEliminarEspecialidad"));
+  modalEliminar.show();
 };
+
+document.getElementById("btnEliminarEspecialidadConfirmado").addEventListener("click", () => {
+  if (idEspecialidadAEliminar !== null) {
+    const lista = getEspecialidades().filter(e => e.id !== idEspecialidadAEliminar);
+    saveEspecialidades(lista);
+    renderEspecialidades();
+    idEspecialidadAEliminar = null;
+  }
+
+  bootstrap.Modal.getInstance(document.getElementById("modalEliminarEspecialidad")).hide();
+});
+
+
+
 
 // Inicializar la tabla
 renderEspecialidades();

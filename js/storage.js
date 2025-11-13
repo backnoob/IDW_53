@@ -33,8 +33,12 @@ export function eliminarMedico(id) {
 
 // --- OBRAS SOCIALES ---
 export function getObrasSociales() {
-  return JSON.parse(localStorage.getItem("obrasSociales")) || [];
+  const obras = JSON.parse(localStorage.getItem("obrasSociales")) || [];
+  console.log("Obras sociales cargadas desde localStorage:", obras);  // Verifica que estén presentes
+  return obras;
 }
+
+
 
 export function saveObrasSociales(lista) {
   localStorage.setItem("obrasSociales", JSON.stringify(lista));

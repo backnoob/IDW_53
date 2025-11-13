@@ -1,11 +1,11 @@
 import { getMedicos, eliminarMedico } from "./storage.js";
 import { abrirModalEdicion } from "./medico.js";
 import { obrasSociales } from "./data.js";
-import { getEspecialidades } from './storage.js';  
+import { getEspecialidades } from './storage.js';
 
 function getNombreEspecialidad(id) {
   const especialidades = getEspecialidades();
-  console.log("Especialidades disponibles:", especialidades);  
+  console.log("Especialidades disponibles:", especialidades);
 
   const esp = especialidades.find(e => e.id === id);
   console.log(`Buscando especialidad con ID: ${id}`);
@@ -13,17 +13,26 @@ function getNombreEspecialidad(id) {
   return esp ? esp.nombre : '-';
 }
 
-function getNombresObrasSociales(ids = []) {
+// Obtener nombres de obras sociales desde localStorage y no de la variable 'obrasSociales'
+export function getNombresObrasSociales(ids = []) {
+  console.log(`Buscando obras sociales con los IDs: ${ids}`);
+  const obrasSociales = getObrasSociales();  // Ahora obtenemos de localStorage
   return ids.map(id => {
-    const os = obrasSociales.find(o => o.id === id);
+    const os = obrasSociales.find(o => o.id === id); // Buscar el nombre por ID
+    console.log(`Obra social encontrada para ID ${id}: ${os ? os.nombre : '-'}`);
     return os ? os.nombre : '-';
   }).join(', ');
 }
+
+
+
 export function renderMedicos() {
   const contenedor = document.getElementById("cardsMedicos");
   if (!contenedor) return;
 
   const medicos = getMedicos();
+  console.log("Médicos cargados:", medicos);
+
   contenedor.innerHTML = "";
 
   medicos.forEach(medico => {
@@ -32,16 +41,15 @@ export function renderMedicos() {
     card.style.width = "18rem";
 
     const valor = Number(medico.valorConsulta) || 0;
-    const descripcion = medico.descripcion || "";
+    const especialidad = getNombreEspecialidad(medico.especialidadId); // Aquí usamos la función para obtener el nombre
     const foto = medico.foto || "img/default-doctor.jpg";
 
     card.innerHTML = `
       <img src="${foto}" class="card-img-top" alt="${medico.nombre}">
       <div class="card-body">
         <h5 class="card-title">${medico.nombre} ${medico.apellido}</h5>
-        <p class="card-text">${descripcion}</p>
+        <p class="card-text"><strong>Especialidad:</strong> ${especialidad}</p> <!-- Mostrar especialidad -->
         <p><strong>Valor de consulta:</strong> $${valor.toFixed(2)}</p>
-     
       </div>
     `;
 
@@ -49,6 +57,7 @@ export function renderMedicos() {
 
   });
 }
+
 
 // esta renderiza la tabla medicos de la vista admin
 export function renderTablaMedicos() {
@@ -67,7 +76,7 @@ export function renderTablaMedicos() {
       <td>${medico.id}</td>
       <td>${medico.nombre}</td>
       <td>${medico.apellido}</td>
-<td>${getNombreEspecialidad(medico.especialidadId)}</td>
+      <td>${getNombreEspecialidad(medico.especialidadId)}</td>
       <td>${medico.matricula || '-'}</td>
       <td>$${(Number(medico.valorConsulta) || 0).toFixed(2)}</td>
       <td>${getNombresObrasSociales(medico.obrasSociales)}</td>
@@ -81,7 +90,7 @@ export function renderTablaMedicos() {
     tbody.appendChild(fila);
 
     fila.querySelector(".btn-primary").onclick = () => abrirModalEdicion(medico.id);
-    
+
     fila.querySelector(".btn-danger").onclick = () => mostrarModalEliminar(medico.id);
 
   });
